@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %} {{ super }} | login{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+{% block body_attribs %}class="container"{% endblock body_attribs %}
+
+{% block content %}
+    <div class="login">
+        <img src="{{ url_for('static', filename='images/Logo-uptc-oficial.png') }}" alt="" class="login__image">
+        <div class="login__section">
+            <div class="login__content">
+                <h1 class="login__header">Scouting UPTC</h1>
+                <form action="{{ url_for('auth.login') }}" method="post" class="login__form">
+
+                    <div class="input-group">
+                        {{ login_form.email(class_="form-control", placeholder="Email") }}
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2"><b>@uptc.edu.co</b></span>
+                        </div>
+                    </div>
+                    {{ login_form.password(class_="form-control", placeholder="password") }}
+                    {{ login_form.submit(class="btn btn-primary") }}
+
+                </form>
+                <hr>
+                <small>
+                    <a href="">forgot your password?</a>
+                </small>
+            </div>
+            <div class="signin">
+                <p>Don't have an account? <a href=""> Sign in</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

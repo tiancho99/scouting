@@ -1,0 +1,125 @@
+//*! only bootstrap-grid and input-group
+// @import "../node_modules/bootstrap/scss/bootstrap-grid.scss";
+// @import "../node_modules/bootstrap/scss/input-group";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100&display=swap');
+
+$uptc-color: #e4a900;
+$border-color: #ececec;
+$bg-color: #fafafa;
+$inside-color: #ffffff;
+
+body {
+    height: 100vh;
+    background-color: $bg-color;
+    // display: flex;
+    // align-items: center;
+
+    .login {
+        // @include make-row();
+        margin-top: 70px;
+        display: flex;
+        justify-content: center;
+        @include media-breakpoint-up(sm){
+            margin-top: 0;
+            height: 100vh;
+            align-items: center;
+            
+        }
+        @include media-breakpoint-up(md) {
+
+        }
+        .login__image {
+            display: none;
+            @include media-breakpoint-up(lg) {
+                display: block;
+                height: 476px;
+                width: 307px;
+                // margin: 0px 30px 0px 13;
+                margin: 30px;
+            }
+        }
+        .login__section {
+            @include media-breakpoint-up(lg) {
+                    // margin: 0px 50px 0px 25px;
+                
+            }
+
+            .login__content {
+                @include make-col-ready();
+
+                text-align: center;
+                
+                @include media-breakpoint-up(sm) {
+                    background-color: $inside-color;
+                    // margin: 0px 50px 10px 50px;
+                    width: 350px;
+                    height: 380px;
+                    padding: 30px;
+                    border: 1px solid $border-color;
+                }
+                @include media-breakpoint-up(lg) {
+                    margin: 0;
+                }
+                h1 {
+                    font-family: 'Kanit', sans-serif;
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+
+                .login__form {
+                    span {
+                        margin-bottom: 15px;
+
+                        @include media-breakpoint-up(xs) {
+                            font-size: 12px;
+                            padding: 6px 6px;
+                        }
+
+                        @include media-breakpoint-up(md) {
+                            font-size: 15px;
+                            padding: 6px 12px;
+                        }
+
+                    }
+
+                    input {
+                        margin-bottom: 15px;
+                        border: 1px solid $border-color;
+                        background-color: $bg-color;
+                    }
+
+                    .btn-primary {
+                        background-color: $uptc-color;
+                        justify-self: center;
+                        width: 100%;
+                    }
+                }
+
+                a {
+                    display: block;
+                    margin-top: 30px;
+                    text-decoration: none;
+                }
+            }
+            .signin{
+                text-align: center;
+                margin-top: 50px;
+                @include media-breakpoint-up(sm) {
+                    margin:auto;
+                    background-color: $inside-color;
+                    width: 350px;
+                    padding: 30px;
+                    margin-top: 10px;
+                    border: 1px solid $border-color;
+                }
+                p{
+                    margin: 0;
+                }
+
+
+            }
+        }
+    }
+}
