@@ -3,44 +3,112 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100&display=swap');
 
 $uptc-color: #e4a900;
-$border-color: #ececec;
+$border-color: #dfdfdf;
 $bg-color: #fafafa;
 $inside-color: #ffffff;
 
+
 .navbar{
+    width: 100%;
     .navbar-brand {
         img{
+            
             height: 100px;
         }
     }
 }
-
-.content{
-    @include make-container();
+body{
+    background-color: $inside-color;
     display: flex;
-    .calendar{
-        background-color: red;
-        border: 1px solid black;
-        border-radius: 0.25rem;;
-        width: 380px;
-        height: 350px;
-        .calendar__head{
-            display: flex;
-            width: 100%;
-            height: 15%;
-            padding: 10px 30px 0 30px;
-            background-color: $uptc-color;
-            p {
-                display: block;
-                text-align: center;
-                margin: 0;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100vh;
+    .content{
+        @include make-container();
+        margin: 0;
+        padding: 0; 
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        .card{
+            margin-top: 50px;
+            background-color: $bg-color;
+        }
+        .calendar{
+            @include media-breakpoint-up(xs) { 
+                background-color: $inside-color;
+                width: 380px;
+                height: 380px;
+                margin-top: 50px;
+                margin-bottom: 50px;
             }
-            .calendar__arrows {
+            @include media-breakpoint-up(lg) { 
+                width: auto;
+                height: 80%;
+            }
+            @include media-breakpoint-up(xl) { 
+                width: 50%;
+                height: 80%;
+            }
+            
+            .calendar__head{
                 display: flex;
                 width: 100%;
-                justify-content: flex-end;
- 
+                height: 15%;
+                padding: 10px 30px 0 30px;
+                border-left: 1px solid $border-color;
+                border-right: 1px solid $border-color;
+                border-top: 1px solid $border-color;
+                background-color: $uptc-color; 
+                border-top-left-radius: .25rem!important;
+                border-top-right-radius: .25rem!important;
+                p {
+                    display: block;
+                    text-align: center;
+                    margin: 0;
+                }
+                .calendar__arrows {
+                    display: flex;
+                    width: 100%;
+                    justify-content: flex-end;
+    
+                }
             }
+            .calendar__body{
+                display: flex;
+                flex-wrap: wrap;
+                height: 100%;
+                .calendar__day{
+                    @include media-breakpoint-up(xs){
+                        background-color: $bg-color;
+                        border: 1px solid $border-color;
+                        width: 14.28%;
+                        height: 20%;
+                    }
+                    @include media-breakpoint-up(xl){
+                        padding: 5px;
+                    }
+
+                }
+            }
+        }
+    }
+    #footer {
+        display: flex;
+        align-self: flex-end;
+        width: 100%;
+        height: 15%;
+        margin-top: 50px;
+        font-weight: 500;
+        align-items: center;
+        background: linear-gradient(to right, rgba(212,159,26,1) 0%, rgba(245,183,26,1) 71%, rgba(232,188,84,1) 98%, rgba(232,188,84,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d49f1a', endColorstr='#e8bc54', GradientType=1 );
+        @include media-breakpoint-up(md) { 
+            
+        }
+        a{
+            text-decoration: none;
+            color: black;
         }
     }
 }

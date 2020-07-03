@@ -20,7 +20,7 @@ def login():
         if user and user.check_password(password):
             login_user(user)
             
-            return render_template('home.html')
+            return redirect(url_for('profile.home'))
         # return redirect(url_for('profile.home'))
 
     context = {
@@ -30,6 +30,7 @@ def login():
     return render_template('login.html', **context)
 
 @auth.route('/logout', methods=['GET', 'POST'])
+
 @login_required
 def logout():
     logout_user()

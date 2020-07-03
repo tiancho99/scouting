@@ -9910,41 +9910,107 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.navbar {
+  width: 100%;
+}
 .navbar .navbar-brand img {
   height: 100px;
 }
 
-.content {
+body {
+  background-color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100vh;
+}
+body .content {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  margin: 0;
+  padding: 0;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
-.content .calendar {
-  background-color: red;
-  border: 1px solid black;
-  border-radius: 0.25rem;
+body .content .card {
+  margin-top: 50px;
+  background-color: #fafafa;
+}
+body .content .calendar {
+  background-color: #ffffff;
   width: 380px;
-  height: 350px;
+  height: 380px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
-.content .calendar .calendar__head {
+@media (min-width: 992px) {
+  body .content .calendar {
+    width: auto;
+    height: 80%;
+  }
+}
+@media (min-width: 1200px) {
+  body .content .calendar {
+    width: 50%;
+    height: 80%;
+  }
+}
+body .content .calendar .calendar__head {
   display: flex;
   width: 100%;
   height: 15%;
   padding: 10px 30px 0 30px;
+  border-left: 1px solid #dfdfdf;
+  border-right: 1px solid #dfdfdf;
+  border-top: 1px solid #dfdfdf;
   background-color: #e4a900;
+  border-top-left-radius: 0.25rem !important;
+  border-top-right-radius: 0.25rem !important;
 }
-.content .calendar .calendar__head p {
+body .content .calendar .calendar__head p {
   display: block;
   text-align: center;
   margin: 0;
 }
-.content .calendar .calendar__head .calendar__arrows {
+body .content .calendar .calendar__head .calendar__arrows {
   display: flex;
   width: 100%;
   justify-content: flex-end;
+}
+body .content .calendar .calendar__body {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+}
+body .content .calendar .calendar__body .calendar__day {
+  background-color: #fafafa;
+  border: 1px solid #dfdfdf;
+  width: 14.28%;
+  height: 20%;
+}
+@media (min-width: 1200px) {
+  body .content .calendar .calendar__body .calendar__day {
+    padding: 5px;
+  }
+}
+body #footer {
+  display: flex;
+  align-self: flex-end;
+  width: 100%;
+  height: 15%;
+  margin-top: 50px;
+  font-weight: 500;
+  align-items: center;
+  background: linear-gradient(to right, #d49f1a 0%, #f5b71a 71%, #e8bc54 98%, #e8bc54 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#d49f1a", endColorstr="#e8bc54", GradientType=1 );
+}
+body #footer a {
+  text-decoration: none;
+  color: black;
 }
 
 /*# sourceMappingURL=home.css.map */

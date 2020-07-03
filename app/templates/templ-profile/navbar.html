@@ -15,9 +15,9 @@
                         Jugadores
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="create.html">Create</a>
-                        <a class="dropdown-item" href="read.html">View</a>
-                        <a class="dropdown-item" href="update.html">Edit</a>
+                        <a class="dropdown-item" href="{{ url_for('profile.create')}}">Create</a>
+                        <a class="dropdown-item" href="crud/read.html">View</a>
+                        <a class="dropdown-item" href="crud/update.html">Edit</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" id="danger" href="delete.html">Delete</a>
                     </div>
@@ -32,7 +32,7 @@
                     <a class="nav-link" href="#">vs</a>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-light my-2 my-sm-0 ml-5" id="btn-uptc" type="submit">Log out</button>
+                    <button class="btn btn-warning my-2 my-sm-0 ml-5" id="btn-uptc" type="submit">Log out</button>
                 </li>
             </ul>
         </div>

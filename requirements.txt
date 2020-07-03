@@ -1,4 +1,6 @@
 flask
 flask-wtf
+pymysql
+mysqlclient
 flask-SQLAlchemy
 flask-login

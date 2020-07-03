@@ -1,0 +1,9 @@
+{% macro calendar() -%}
+        {% for i in range(31) %}
+        <div class="calendar__day">{{ i+1 }}</div>
+        {% endfor %}
+        <div class="calendar__day"></div>
+        <div class="calendar__day"></div>
+        <div class="calendar__day"></div>
+        <div class="calendar__day"></div>
+{%- endmacro %}

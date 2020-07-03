@@ -7,7 +7,7 @@ db = SQLAlchemy()
 
 class Athlete(UserMixin, db.Model):
     __tablename__ = 'athlete'
-    id = db.Column('user', db.String(40), primary_key=True)
+    id = db.Column('id', db.String(40), primary_key=True)
 
     password = db.Column('password', db.String(200), nullable=False)
 
