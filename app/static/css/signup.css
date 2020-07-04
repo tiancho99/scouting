@@ -9921,84 +9921,44 @@ body {
   background-color: #ffffff;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
   height: 100vh;
 }
 body .alert {
+  text-align: center;
   width: 100%;
 }
 body .content {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  margin: 0;
-  padding: 0;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
+  padding: 50px;
+  width: 100%;
 }
-body .content .card {
-  margin-top: 50px;
-  background-color: #fafafa;
-}
-body .content .calendar {
-  background-color: #ffffff;
-  width: 380px;
-  height: 380px;
-  margin-top: 50px;
-  margin-bottom: 50px;
+body .content form {
+  max-width: 700px;
 }
 @media (min-width: 992px) {
-  body .content .calendar {
-    width: auto;
-    height: 80%;
+  body .content form {
+    width: 60%;
   }
 }
-@media (min-width: 1200px) {
-  body .content .calendar {
+@media (min-width: 992px) {
+  body .content form {
     width: 50%;
-    height: 80%;
   }
 }
-body .content .calendar .calendar__head {
-  display: flex;
-  width: 100%;
-  height: 15%;
-  padding: 10px 30px 0 30px;
-  border-left: 1px solid #dfdfdf;
-  border-right: 1px solid #dfdfdf;
-  border-top: 1px solid #dfdfdf;
+body .content form .file {
+  margin-top: 15px;
+}
+body .content form input[type=submit] {
   background-color: #e4a900;
-  border-top-left-radius: 0.25rem !important;
-  border-top-right-radius: 0.25rem !important;
-}
-body .content .calendar .calendar__head p {
-  display: block;
-  text-align: center;
-  margin: 0;
-}
-body .content .calendar .calendar__head .calendar__arrows {
-  display: flex;
+  border-color: #dfdfdf;
+  justify-self: center;
   width: 100%;
-  justify-content: flex-end;
 }
-body .content .calendar .calendar__body {
-  display: flex;
-  flex-wrap: wrap;
-  height: 100%;
-}
-body .content .calendar .calendar__body .calendar__day {
-  background-color: #fafafa;
-  border: 1px solid #dfdfdf;
-  width: 14.28%;
-  height: 20%;
-}
-@media (min-width: 1200px) {
-  body .content .calendar .calendar__body .calendar__day {
-    padding: 5px;
-  }
+body .content form p {
+  color: #dc3545;
 }
 body #footer {
   display: flex;
@@ -10016,4 +9976,4 @@ body #footer a {
   color: black;
 }
 
-/*# sourceMappingURL=home.css.map */
+/*# sourceMappingURL=signup.css.map */

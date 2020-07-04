@@ -11,8 +11,8 @@
         <div class="login__section">
             <div class="login__content">
                 <h1 class="login__header">Scouting UPTC</h1>
-                <form action="{{ url_for('auth.login') }}" method="post" class="login__form">
-
+                <form action="{{ url_for('auth.login') }}" method="POST" class="login__form">
+                    {{ login_form.csrf_token }}
                     <div class="input-group">
                         {{ login_form.email(class_="form-control", placeholder="Email") }}
                         <div class="input-group-append">
@@ -29,7 +29,7 @@
                 </small>
             </div>
             <div class="signin">
-                <p>Don't have an account? <a href=""> Sign in</a></p>
+                <p>Don't have an account? <a href="{{ url_for('auth.signup')}}"> Sign in</a></p>
             </div>
         </div>
     </div>

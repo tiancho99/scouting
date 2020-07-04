@@ -1,0 +1,28 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends 'base.html' %}
+
+{% block title %}{{ super() }} | Create{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+{% endblock %}
+
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <!-- formulario -->
+        {{ wtf.quick_form(signup_form)}}
+
+        <!-- /formulario -->
+    </div>
+    <!-- footer -->
+    {% include "footer.html" %}
+    <!-- /footer -->
+{% endblock %}
+
+{% block scripts %}
+   {{ super() }}
+{% endblock %}
