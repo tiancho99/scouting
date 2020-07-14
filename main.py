@@ -8,3 +8,7 @@ app = create_app()
 @app.route('/')
 def index():
     return redirect(url_for('auth.login'))
+
+@app.route('/static/uploads')
+def upload():
+    return app.config[UPLOAD_FOLDER]

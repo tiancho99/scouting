@@ -13,7 +13,8 @@ $inside-color: #ffffff;
     .navbar-brand {
         img{
             
-            height: 100px;
+            max-height: 100px;
+   
         }
     }
 }
@@ -36,6 +37,11 @@ body{
         .card{
             margin-top: 50px;
             background-color: $bg-color;
+            img{
+                height: 300px;
+                object-fit: initial;
+                // object-position: center;
+            }
         }
         .calendar{
             @include media-breakpoint-up(xs) { 

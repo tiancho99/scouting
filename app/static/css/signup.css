@@ -9916,6 +9916,9 @@ h3 {
 .navbar .navbar-brand img {
   height: 100px;
 }
+.navbar h1 {
+  align-self: flex-start;
+}
 
 body {
   background-color: #ffffff;
@@ -9928,6 +9931,9 @@ body {
 body .alert {
   text-align: center;
   width: 100%;
+}
+body h1 {
+  margin-top: 30px;
 }
 body .content {
   display: flex;

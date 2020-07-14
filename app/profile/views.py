@@ -7,7 +7,6 @@ from . import profile
 @profile.route('/home')
 @login_required
 def home():
-    print('LOGIN')
     user = current_user
     context = {
         'user': user

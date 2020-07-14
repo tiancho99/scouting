@@ -9914,7 +9914,7 @@ h3 {
   width: 100%;
 }
 .navbar .navbar-brand img {
-  height: 100px;
+  max-height: 100px;
 }
 
 body {
@@ -9942,6 +9942,10 @@ body .content {
 body .content .card {
   margin-top: 50px;
   background-color: #fafafa;
+}
+body .content .card img {
+  height: 300px;
+  object-fit: initial;
 }
 body .content .calendar {
   background-color: #ffffff;

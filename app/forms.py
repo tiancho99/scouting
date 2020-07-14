@@ -1,6 +1,6 @@
 from flask import flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField, DateField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, FileField, DateField, SelectField, TextAreaField
 from wtforms.validators import InputRequired, ValidationError, EqualTo, StopValidation
 import re
 
@@ -19,11 +19,10 @@ def validate_dorsal(form, dorsal):
         raise ValidationError('!Dorsal is already in use')
 
 def allowed_file(form, image):
-    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpge', 'gif', 'PNG', 'JPG', 'JPEG', 'GIF'])
-    x = str(image.data).rsplit('.', 1)[1]
-    y = x.rsplit("'", 1)[0]
-    print(image.data)
-    if not ('.' in image.data and image.data.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS):
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'PNG', 'JPG', 'JPEG', 'GIF'])
+    split_data = str(image.data).rsplit('.', 1)[1]
+    extension = split_data.split("'", 1)[0]
+    if not (extension in ALLOWED_EXTENSIONS):
         image.errors[:] = []
         raise ValidationError('!Invalid file extension')  
 
@@ -34,6 +33,10 @@ class login_form(FlaskForm):
 
 
 class signup_form(FlaskForm):
+    choices = [\
+        ("1","Goal Keeper"), ("2","Right Fullback"), ("3","Left Fullback"), ("4","Center Back"), ("55","Defending/holding Midfielder"),\
+            ("6","Right Midfielder/Winger"), ("7","Central/Box-to-Box Midfielder"), ("8","Striker"), ("9","Attacking Midfielder/Playmaker"),\
+                ("10","Left Midfielder/Wingers")]
     id = StringField('Email', validators=[InputRequired(), validate_name])
     password = PasswordField('Pasword', validators=[InputRequired(), EqualTo('confirm', message='!Passwords must match')])
     confirm = PasswordField('Confirm pasword', validators=[InputRequired()])
@@ -43,15 +46,7 @@ class signup_form(FlaskForm):
     weight = StringField('Wheight', validators=[InputRequired()])
     birthday = DateField('Birthday YYYY-MM-dd', validators=[InputRequired()], format='%Y-%m-%d')
     dorsal = StringField('Dorsal', validators=[InputRequired(), validate_dorsal])
-    position = SelectField('Position', choices=[\
-        ("1","Goal Keeper"), ("2","Right Fullback"), ("3","Left Fullback"), ("4","Center Back"), ("55","Defending/holding Midfielder"),\
-            ("6","Right Midfielder/Winger"), ("7","Central/Box-to-Box Midfielder"), ("8","Striker"), ("9","Attacking Midfielder/Playmaker"),\
-                ("10","Left Midfielder/Wingers")])
-    image = FileField('image', validators=[InputRequired(), allowed_file])
+    position = SelectField('Position', choices= choices)
+    biography  = TextAreaField('Biography')
+    image = FileField('image', validators=[InputRequired()])
     submit = SubmitField()
-
-
-
-(1,"Goal Keeper"), (2,"Right Fullback"), (3,"Left Fullback"), (4,"Center Back"), (5,"Defending/holding Midfielder"),\
-                (6,"Right Midfielder/Winger"), (7,"Central/Box-to-Box Midfielder"), (8,"Striker"), (9,"Attacking Midfielder/Playmaker"),\
-                    (10,"Left Midfielder/Wingers")

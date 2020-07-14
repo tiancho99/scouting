@@ -1,4 +1,6 @@
 {% import "bootstrap/wtf.html" as wtf %}
+{% import "navbar.html" as navbar %}
+
 {% extends 'base.html' %}
 
 {% block title %}{{ super() }} | Create{% endblock %}
@@ -8,10 +10,11 @@
 {% endblock %}
 
 {% block navbar %}
-    {% include "navbar.html" %}
+    {{ navbar.nobody() }}
 {% endblock %}
 
 {% block content %}
+<h1>Signup user form</h1>
     <div class="content">
         <!-- formulario -->
         {{ wtf.quick_form(signup_form)}}

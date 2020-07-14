@@ -4,22 +4,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
+#! person
+class Person(UserMixin, db.Model):
+    __tablename__ = 'person'
 
-class Athlete(UserMixin, db.Model):
-    __tablename__ = 'athlete'
-
-    def __init__(self, id, name, lastname, height, weight, birthday, dorsal, position, is_coach, image):
+    def __init__(self, id, name, lastname, birthday, biography, image):
         self.id = id
         self.name = name
         self.lastname = lastname
-        self.height = height
-        self.weight = weight
         self.birthday = birthday
-        self.dorsal = dorsal
+        self.biography = biography
         self.image = image
-        self.position = position
-        self.is_coach = is_coach
-
 
     id = db.Column('id', db.String(40), primary_key=True)
 
@@ -29,24 +24,65 @@ class Athlete(UserMixin, db.Model):
 
     lastname = db.Column('lastname', db.String(100), nullable=False)
 
-    height = db.Column('height', db.Float(), nullable=False)
-
-    weight = db.Column('weight', db.Float(), nullable=False)
-
     birthday = db.Column('birthday', db.Date(), nullable=False)
 
-    dorsal = db.Column('dorsal', db.Integer(), nullable=False)
+    biography = db.Column('biography', db.Date(), nullable=True)
 
-    position = db.Column('position', db.Integer(), nullable=False)
+    image = db.Column('image', db.String(500), nullable=True)
 
-    is_coach = db.Column('is_coach', db.Boolean(), nullable=False)
+    id_athlete = db.Column('id_athlete', db.ForeignKey('athlete.id'))
 
-    image = db.Column('image', db.String(), nullable=True)
+    id_coach = db.Column('id_coach', db.ForeignKey('coach.id'))
+
+    def set_athlete(self, athlete):
+        self.athlete = athlete
+        self.coach = None
+
+    def set_coach(self, coach):
+        self.coach = coach
+        self.athlete = None
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')
 
     def check_password(self, password):
-        print(password)
-        print(self.password)
+
         return check_password_hash(self.password, password)
+
+#! Atlete
+class Athlete(db.Model):
+    __tablename__ = 'athlete'
+
+    def __init__(self, height, weight ,dorsal, position):
+        self.id = None
+        self.height = height
+        self.weight = weight
+        self.dorsal = dorsal
+        self.position = position
+
+    
+    id = db.Column('id', db.Integer(), primary_key=True)
+
+    height = db.Column('height', db.Float(), nullable=False)
+
+    weight = db.Column('weight', db.Float(), nullable=False)
+    
+    dorsal = db.Column('dorsal', db.Integer(), nullable=False)
+
+    position = db.Column('position', db.Integer(), nullable=False)
+
+    person = db.relationship('Person', backref='athlete', lazy=False, uselist=False)
+
+#!Coach
+class Coach(db.Model):
+    __tablename__ = 'coach'
+
+    def __init__(self, especialization):
+        self.id = None
+        self.especialization = especialization
+    
+    id = db.Column('id', db.Integer(), primary_key=True)
+    especialization = db.Column('especialization', db.String(100), nullable=False)
+    person = db.relationship('Person', backref='coach', lazy=False, uselist=False)
+
+    

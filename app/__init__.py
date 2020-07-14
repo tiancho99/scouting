@@ -4,7 +4,7 @@ from flask_bootstrap import Bootstrap
 
 
 from .config import Config
-from .models import Athlete
+from .models import Person
 
 login_manager = LoginManager()
 
@@ -12,7 +12,7 @@ login_manager = LoginManager()
 def load_user(user_id):
     """Check if user is logged-in on every page load."""
     if user_id is not None:
-        return Athlete.query.get(user_id)
+        return Person.query.get(user_id)
     return None
 
 def create_app():
@@ -30,8 +30,10 @@ def create_app():
     # bring blueprints
     from .auth import auth
     from .profile import profile
+    from .crud import crud
 
     # register blueprints
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_blueprint(profile, url_prefix='/profile')
+    app.register_blueprint(crud, url_prefix='/crud')
     return app

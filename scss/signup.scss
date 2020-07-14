@@ -16,6 +16,9 @@ $inside-color: #ffffff;
             height: 100px;
         }
     }
+    h1{
+        align-self: flex-start;
+    }
 }
 body{
     background-color: $inside-color;
@@ -27,6 +30,9 @@ body{
     .alert{
         text-align: center;
         width: 100%;
+    }
+    h1{
+        margin-top:30px;
     }
     .content{
         display: flex;
