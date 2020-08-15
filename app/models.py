@@ -31,9 +31,9 @@ class Person(UserMixin, db.Model):
 
     image = db.Column('image', db.String(500), nullable=True)
 
-    id_athlete = db.Column('id_athlete', db.ForeignKey('athlete.id'))
+    id_athlete = db.Column(db.Integer, db.ForeignKey('athlete.id'))
 
-    id_coach = db.Column('id_coach', db.ForeignKey('coach.id'))
+    id_coach = db.Column(db.Integer, db.ForeignKey('coach.id'))
 
     def set_athlete(self, athlete):
         self.athlete = athlete
@@ -62,21 +62,23 @@ class Athlete(db.Model):
         self.position = position
 
     
-    id = db.Column('id', db.Integer(), primary_key=True)
+    id = db.Column('id', db.Integer, primary_key=True)
 
-    height = db.Column('height', db.Float(), nullable=False)
+    height = db.Column('height', db.Float, nullable=False)
 
-    weight = db.Column('weight', db.Float(), nullable=False)
+    weight = db.Column('weight', db.Float, nullable=False)
     
-    dorsal = db.Column('dorsal', db.Integer(), nullable=False)
+    dorsal = db.Column('dorsal', db.Integer, nullable=False)
 
     position = db.Column('position', db.ForeignKey('position.id'))
 
     person = db.relationship('Person', backref='athlete', lazy=False, uselist=False)
 
+    record = db.relationship('record', backref='athlete', lazy=True)
+
 #!position
 class Position(db.Model):
-    id = db.Column('id', db.Integer(), primary_key=True)
+    id = db.Column('id', db.Integer, primary_key=True)
 
     description = db.Column('description', db.String(50), nullable=False)
 
@@ -91,18 +93,62 @@ class Coach(db.Model):
         self.id = None
         self.especialization = especialization
     
-    id = db.Column('id', db.Integer(), primary_key=True)
+    id = db.Column('id', db.Integer, primary_key=True)
+
     especialization = db.Column('especialization', db.String(100), nullable=False)
+
     link = db.Column('link', db.String(500), nullable=True)
+
     person = db.relationship('Person', backref='coach', lazy=False, uselist=False)
 
 #!Game
 class Game(db.Model):
     __tablename__= 'coach'
 
-    def __init__(self, location):
-        self.date = strftime.('%Y-%m-%d')
+    def __init__(self, location, training):
+        self.id = strftime.('%Y-%m-%d')
         self.location = location
+        self.training = training
 
-        
+    id = db.Column('id', db.String(12), primary_key=True)
+
+    location = db.Column('location', db.String(100), nullable=False)
+
+    training = db.Column('training', db.Boolean, nullable=False)
     
+    record = db.relationship('record', backref='game', lazy=True)
+
+
+#!Record
+class Record(db.Model):
+    __tablename__= 'record'
+
+    def __init__(self, id_game, id_athlete, played_time, saves, clearances, centered_passes, assists, interceptions, short_passes, long_passes, scored_goals, scored_penalties, scored_freekicks):
+        self.id = None
+        self.id_game = id_game
+        self.id_athlete = id_athlete
+        self.played_time = played_time
+        self.saves = saves
+        self.clearances = clearances
+        self.centered_passes = centered_passes
+        self.assists = assists
+        self.interceptions = interceptions
+        self.short_passes = short_passes
+        self.scored_goals = scored_goals
+        self.scored_penalties = scored_penalties
+        self.scored_freekicks = scored_freekicks
+
+    id = db.Column('id', db.Integer, primary_key=True)
+    id_game = db.Column(db.String(12), db.ForeignKey('game.id'), nullable=False)
+    id_athlete = db.Column(db.Integer, db.ForeignKey('athlete.id'), nullable=False)
+    played_time = db.Column('played_time', db.Integer, nullable=False)
+    saves = db.Column('saves', db.Integer, nullable=True)
+    clearences = db.Column('clearences', db.Integer, nullable=True)
+    centered_passes = db.Column('centered_passes', db.Integer, nullable=True)
+    assists = db.Column('assists', db.Integer, nullable=True)
+    interceptions = db.Column('interceptions', db.Integer, nullable=True)
+    short_passes = db.Column('short_passes', db.Integer, nullable=True)
+    long_passes = db.Column('long_passes', db.Integer, nullable=True)
+    scored_goals = db.Column('scored_goals', db.Integer, nullable=True)
+    scored_penalties = db.Column('scored_penalties', db.Integer, nullable=True)
+    scored_freekicks = db.Column('scored_freekicks', db.Integer, nullable=True)
