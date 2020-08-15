@@ -50,3 +50,6 @@ class signup_form(FlaskForm):
     biography  = TextAreaField('Biography')
     image = FileField('image', validators=[InputRequired()])
     submit = SubmitField()
+
+class logout_form(FlaskForm):
+    logout = SubmitField('boton inutil')

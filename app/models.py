@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from time import strftime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -69,9 +70,18 @@ class Athlete(db.Model):
     
     dorsal = db.Column('dorsal', db.Integer(), nullable=False)
 
-    position = db.Column('position', db.Integer(), nullable=False)
+    position = db.Column('position', db.ForeignKey('position.id'))
 
     person = db.relationship('Person', backref='athlete', lazy=False, uselist=False)
+
+#!position
+class Position(db.Model):
+    id = db.Column('id', db.Integer(), primary_key=True)
+
+    description = db.Column('description', db.String(50), nullable=False)
+
+    athlete = db.relationship('Athlete', backref='pos', lazy=False, uselist=False)
+
 
 #!Coach
 class Coach(db.Model):
@@ -83,6 +93,16 @@ class Coach(db.Model):
     
     id = db.Column('id', db.Integer(), primary_key=True)
     especialization = db.Column('especialization', db.String(100), nullable=False)
+    link = db.Column('link', db.String(500), nullable=True)
     person = db.relationship('Person', backref='coach', lazy=False, uselist=False)
 
+#!Game
+class Game(db.Model):
+    __tablename__= 'coach'
+
+    def __init__(self, location):
+        self.date = strftime.('%Y-%m-%d')
+        self.location = location
+
+        
     

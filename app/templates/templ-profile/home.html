@@ -10,9 +10,9 @@
 
 {% block navbar %}
 {% if user.id_coach %}
-        {{ navbar.coach() }}
+        {{ navbar.coach(logout) }}
 {% elif user.id_athlete %}
-        {{ navbar.athlete() }}
+        {{ navbar.athlete(logout) }}
 {% else %}
         blockofcode
 {% endif %}
@@ -26,20 +26,27 @@
     <div class="content">
         <!-- profile --> 
         <div id="card" class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="...">
+            <img src="{{ user.image }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ user.name | capitalize}} {{ user.lastname | capitalize}}</h5>
-                <p class="card-text">Descripcion breve y conciza de el perfil profesional del profesor.</p>
+                <p class="card-text">{{ user.biography }}</p>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">{{ user.image}}</li>
-                <li class="list-group-item">{{ url_for('upload')}}</li>
-                <li class="list-group-item">Especialidad</li>
-            </ul>
-            <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
+            {% if user.coach %}      
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ user.coach.especialization }}</li>
+                </ul>
+                <div class="card-body">
+                    <a href="{{ user.coach.link }}" class="card-link">Profesional profile</a>
+                </div>
+            {% else %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ user.athlete.pos.description }}</li>
+                </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Dorsal: {{ user.athlete.dorsal }}</li>
+                </ul>
+            {% endif %}
+            
         </div>
         <!--/profile-->
         <!-- calendar -->

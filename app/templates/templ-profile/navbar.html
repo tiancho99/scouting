@@ -1,4 +1,4 @@
-{% macro coach() -%}
+{% macro coach(logout) -%}
     <nav id="header" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" id="logo_header" href="http://www.uptc.edu.co/"><img src="{{ url_for('static', filename='/images/logo.png') }}" alt="logo uptc"></a>
@@ -32,7 +32,7 @@
                         <a class="nav-link" href="#">vs</a>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-warning my-2 my-sm-0 ml-5" id="btn-uptc" type="submit">Log out</button>
+                        {{ logout.logout(class="btn btn-warning my-2 my-sm-0 ml-5", id="btn-uptc") }}
                     </li>
                 </ul>
             </div>
@@ -40,7 +40,7 @@
     </nav>
 {%- endmacro %}
 
-{% macro athlete() -%}
+{% macro athlete(logout) -%}
     <nav id="header" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" id="logo_header" href="http://www.uptc.edu.co/"><img src="{{ url_for('static', filename='/images/logo.png') }}" alt="logo uptc"></a>
@@ -57,7 +57,7 @@
                         <a class="nav-link" href="#">Estadisticas</a>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-warning my-2 my-sm-0 ml-5" id="btn-uptc" type="submit">Log out</button>
+                        {{ logout.logout(class="btn btn-warning my-2 my-sm-0 ml-5", id="btn-uptc") }}
                     </li>
                 </ul>
             </div>

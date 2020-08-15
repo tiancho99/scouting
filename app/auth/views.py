@@ -32,6 +32,9 @@ def login():
         'login_form': login
     }
 
+    # if current_user:
+    #     return redirect(url_for('profile.home'))
+
     return render_template('login.html', **context)
 
 
