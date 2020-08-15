@@ -74,10 +74,11 @@ class Athlete(db.Model):
 
     person = db.relationship('Person', backref='athlete', lazy=False, uselist=False)
 
-    record = db.relationship('record', backref='athlete', lazy=True)
+    record = db.relationship('Record', backref='athlete', lazy=True)
 
 #!position
 class Position(db.Model):
+    __tablename__= 'position'
     id = db.Column('id', db.Integer, primary_key=True)
 
     description = db.Column('description', db.String(50), nullable=False)
@@ -103,10 +104,10 @@ class Coach(db.Model):
 
 #!Game
 class Game(db.Model):
-    __tablename__= 'coach'
+    __tablename__= 'game'
 
     def __init__(self, location, training):
-        self.id = strftime.('%Y-%m-%d')
+        self.id = strftime('%Y-%m-%d')
         self.location = location
         self.training = training
 
@@ -116,7 +117,7 @@ class Game(db.Model):
 
     training = db.Column('training', db.Boolean, nullable=False)
     
-    record = db.relationship('record', backref='game', lazy=True)
+    record = db.relationship('Record', backref='game', lazy=True)
 
 
 #!Record

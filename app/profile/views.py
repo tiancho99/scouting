@@ -5,9 +5,9 @@ from . import profile
 from app.forms import logout_form
 
 
-@profile.route('/home')
+@profile.route('/home/<string:current>')
 @login_required
-def home():
+def home(current):
     logout = logout_form()
     user = current_user
     
@@ -20,17 +20,3 @@ def home():
     }
     return render_template('home.html', **context)
 
-@profile.route('/read')
-@login_required
-def read():
-    return render_template('crud/read.html')
-
-@profile.route('/update')
-@login_required
-def update():
-    return render_template('crud/update.html')
-
-@profile.route('/delete')
-@login_required
-def delete():
-    return render_template('crud/delete.html')

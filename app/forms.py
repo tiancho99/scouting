@@ -34,7 +34,7 @@ class login_form(FlaskForm):
 
 class signup_form(FlaskForm):
     choices = [\
-        ("1","Goal Keeper"), ("2","Right Fullback"), ("3","Left Fullback"), ("4","Center Back"), ("55","Defending/holding Midfielder"),\
+        ("1","Goal Keeper"), ("2","Right Fullback"), ("3","Left Fullback"), ("4","Center Back"), ("5","Defending/holding Midfielder"),\
             ("6","Right Midfielder/Winger"), ("7","Central/Box-to-Box Midfielder"), ("8","Striker"), ("9","Attacking Midfielder/Playmaker"),\
                 ("10","Left Midfielder/Wingers")]
     id = StringField('Email', validators=[InputRequired(), validate_name])
@@ -52,4 +52,4 @@ class signup_form(FlaskForm):
     submit = SubmitField()
 
 class logout_form(FlaskForm):
-    logout = SubmitField('boton inutil')
+    logout = SubmitField()

@@ -15,6 +15,9 @@ from app.mysql_service import get_Person, put_Athlete
 def login():
     login = login_form()
 
+    if current_user.is_active:
+        return redirect(url_for('profile.home', current=current_user.name))
+
     if login.validate_on_submit():
         email = login.email.data
         password = login.password.data
@@ -23,17 +26,14 @@ def login():
 
         if user and user.check_password(password):
             login_user(user)
-            print(user)
             flash('Logued in successfully', category="success")
-            return redirect(url_for('profile.home'))
+            return redirect(url_for('profile.home', current=user.name))
         # return redirect(url_for('profile.home'))
 
     context = {
         'login_form': login
     }
 
-    # if current_user:
-    #     return redirect(url_for('profile.home'))
 
     return render_template('login.html', **context)
 
@@ -84,7 +84,6 @@ def signup():
 
 
 @auth.route('/logout', methods=['GET', 'POST'])
-
 @login_required
 def logout():
     logout_user()

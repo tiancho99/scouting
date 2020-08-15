@@ -10,9 +10,9 @@
 
 {% block navbar %}
 {% if user.id_coach %}
-        {{ navbar.coach(logout) }}
+        {{ navbar.coach(logout, user) }}
 {% elif user.id_athlete %}
-        {{ navbar.athlete(logout) }}
+        {{ navbar.athlete(logout, user) }}
 {% else %}
         blockofcode
 {% endif %}
