@@ -12,9 +12,11 @@ from app.mysql_service import get_Games
 def home(current):
     logout = logout_form()
     user = current_user
-    # games = get_Games()
-    # games_json = jsonify({i})
-    # print(games)
+    games = get_Games()
+    print(games)
+    for game in games:
+        jsonify({'game': game})
+
     if logout.validate_on_submit():
         return redirect(url_for('auth.logout'))
         

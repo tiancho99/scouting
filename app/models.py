@@ -121,13 +121,19 @@ class Game(db.Model):
     
     record = db.relationship('Record', backref='game', lazy=True)
 
-#! Game Schema
-# class GameSchema(ma.SQLAlchemyAutoSchema):
-#     class Meta:
-#         model = Game
-#         load_instance = True
+# Game Schema
+class GameSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Game
 
-#!Record
+        id = ma.auto_field()
+        location = ma.auto_field()
+        training = ma.auto_field()
+        record = ma.auto_field()
+        include_fk = True
+
+
+#! Record
 class Record(db.Model):
     __tablename__= 'record'
 
