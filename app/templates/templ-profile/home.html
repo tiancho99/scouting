@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {% endblock %}
 
+{% block body_attribs -%}
+onload="loadCalendar()"
+{%- endblock %}
+
 {% block navbar %}
 {% if user.id_coach %}
         {{ navbar.coach(logout, user) }}
@@ -71,6 +75,11 @@
 
 {% block scripts %}
     {{ super() }}
+    <script>
+        function loadCalendar(){
+            alert('{{games}}')
+        }
+    </script>
 {% endblock %}
 
 

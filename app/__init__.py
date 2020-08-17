@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
-
+from flask_marshmallow import Marshmallow
 
 from .config import Config
 from .models import Person
@@ -22,9 +22,11 @@ def create_app():
     app.app_context().push()
 
     #initialize plugins
-    from .models import db
+    from .models import db, ma
     Bootstrap(app)
     db.init_app(app)
+    ma.init_app(app)
+   
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 

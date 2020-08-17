@@ -1,9 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 from time import strftime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
+ma = Marshmallow()
 
 #! person
 class Person(UserMixin, db.Model):
@@ -119,6 +121,11 @@ class Game(db.Model):
     
     record = db.relationship('Record', backref='game', lazy=True)
 
+#! Game Schema
+# class GameSchema(ma.SQLAlchemyAutoSchema):
+#     class Meta:
+#         model = Game
+#         load_instance = True
 
 #!Record
 class Record(db.Model):

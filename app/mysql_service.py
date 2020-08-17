@@ -1,4 +1,4 @@
-from .models import Person, Athlete, db
+from .models import Person, Athlete, Game, db
 
 def get_Person(email):
     person = Person.query.filter_by(id=email).first()
@@ -11,6 +11,11 @@ def get_People():
 def get_Athlete_by_dorsal(dorsal):
     athlete = Athlete.query.filter_by(dorsal=dorsal).first()
     return athlete
+
+
+def get_Games():
+    games = Game.query.order_by(Game.id).all()
+    return games
 
 
 def put_Athlete(id, password, name, lastname, birthday, biography, image, height, weight, dorsal, position):

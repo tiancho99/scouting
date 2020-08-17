@@ -5,3 +5,5 @@ pymysql
 mysqlclient
 flask-SQLAlchemy
 flask-login
+flask-marshmallow
+marshmallow-SQLAlchemy
