@@ -1,10 +1,10 @@
 from flask import flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField, DateField, SelectField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, FileField, DateField, SelectField, TextAreaField, HiddenField
 from wtforms.validators import InputRequired, ValidationError, EqualTo, StopValidation
 import re
 
-from app.mysql_service import get_Athlete_by_dorsal
+from app.mysql_service import get_Athlete_by_dorsal, get_Person, get_People
 
 def validate_name(form, email):
     resultado = re.fullmatch('^[a-z]*[.][a-z 0-9]*', email.data)
@@ -15,6 +15,13 @@ def validate_name(form, email):
 def validate_dorsal(form, dorsal):
     player = get_Athlete_by_dorsal(dorsal.data)
     if player is not None:
+        dorsal.errors[:] = []
+        raise ValidationError('!Dorsal is already in use')
+
+def avalidate_dorsal(form, dorsal):
+    player = get_Athlete_by_dorsal(dorsal.data)
+
+    if player is not None and dorsal.data != str(player.dorsal):
         dorsal.errors[:] = []
         raise ValidationError('!Dorsal is already in use')
 
@@ -53,3 +60,70 @@ class signup_form(FlaskForm):
 
 class logout_form(FlaskForm):
     logout = SubmitField()
+
+class search_person_form(FlaskForm):
+    people = get_People()
+    person_list =[]
+    for person in people:
+        if person.athlete != None:
+            person_list.append(('{}'.format(person.id),'{} {}'.format(person.lastname, person.name)))
+    player = SelectField('Select player', choices=person_list)
+    search = SubmitField()
+
+class delete_person_form(FlaskForm):
+    people = get_People()
+    person_list =[]
+    for person in people:
+        if person.athlete != None:
+            person_list.append(('{}'.format(person.id),'{} {}'.format(person.lastname, person.name)))
+    player = SelectField('Select player', choices=person_list)
+    search = SubmitField('Delete')
+
+def create_edit_form(id):
+    class edit_form(FlaskForm):
+        pass
+    player = get_Person(id)
+    choices = [\
+        ("1","Goal Keeper"), ("2","Right Fullback"), ("3","Left Fullback"), ("4","Center Back"), ("5","Defending/holding Midfielder"),\
+            ("6","Right Midfielder/Winger"), ("7","Central/Box-to-Box Midfielder"), ("8","Striker"), ("9","Attacking Midfielder/Playmaker"),\
+                ("10","Left Midfielder/Wingers")]
+    
+    id = HiddenField('id', default=player.id, validators=[InputRequired()])
+    email = StringField('Email', validators=[validate_name, InputRequired()], default=player.id)
+    name = StringField('Name',default=player.name, validators=[InputRequired()])
+    lastname = StringField('Lastname',default=player.lastname, validators=[InputRequired()])
+    birthday = DateField('Birthday YYYY-MM-dd', format='%Y-%m-%d',default=player.birthday, validators=[InputRequired()])
+    height = StringField('Height',default=player.athlete.height, validators=[InputRequired()])
+    weight = StringField('Wheight',default=player.athlete.weight, validators=[InputRequired()])
+    dorsal = StringField('Dorsal', validators=[validate_dorsal, InputRequired()],default=player.athlete.dorsal)
+    position = SelectField('Position', choices= choices,default=player.athlete.position, validators=[InputRequired()])
+    submit = SubmitField()
+    setattr(edit_form, 'id', id) 
+    setattr(edit_form, 'email', email)
+    setattr(edit_form, 'name', name)
+    setattr(edit_form, 'lastname', lastname)
+    setattr(edit_form, 'birthday', birthday)
+    setattr(edit_form, 'height', height)
+    setattr(edit_form, 'weight', weight)
+    setattr(edit_form, 'dorsal', dorsal)
+    setattr(edit_form, 'position', position)
+    setattr(edit_form, 'submit', submit)
+    
+    return edit_form()
+
+class edit_form(FlaskForm):
+    choices = [\
+    ("1","Goal Keeper"), ("2","Right Fullback"), ("3","Left Fullback"), ("4","Center Back"), ("5","Defending/holding Midfielder"),\
+        ("6","Right Midfielder/Winger"), ("7","Central/Box-to-Box Midfielder"), ("8","Striker"), ("9","Attacking Midfielder/Playmaker"),\
+            ("10","Left Midfielder/Wingers")]
+
+    id = HiddenField('id')
+    email = StringField('Email', validators=[validate_name])
+    name = StringField('Name')
+    lastname = StringField('Lastname')
+    birthday = DateField('Birthday YYYY-MM-dd', format='%Y-%m-%d')
+    height = StringField('Height')
+    weight = StringField('Wheight')
+    dorsal = StringField('Dorsal', validators=[avalidate_dorsal])
+    position = SelectField('Position', choices= choices)
+    submit = SubmitField()

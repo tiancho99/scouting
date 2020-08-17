@@ -1,0 +1,61 @@
+{% import "navbar.html" as navbar %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends 'base.html' %}
+{% block title %} {{ super() }} | View {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/view.css') }}">
+{% endblock %}
+
+{% block navbar %}
+    {% if user.id_coach %}
+        {{ navbar.coach(logout, user) }}
+    {% elif user.id_athlete %}
+        {{ navbar.athlete(logout, user) }}
+    {% else %}
+        {{ navbar.nobody() }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ wtf.quick_form(search)}}
+    {% if player %}
+        <form action="{{ url_for('crud.edit') }}", method="POST" class="edit-form">
+            {{ edit.csrf_token }}
+            <div class="edit-form-content">
+                <!-- card  -->
+                <div id="card" class="card" style="width: 18rem;">
+                    <img src="{{ player.image }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <div class="card-text">
+                            {{ edit.name.label()}}{{ edit.name(class_="form-control") }}
+                            {{ edit.lastname.label()}}{{ edit.lastname(class_="form-control") }}
+                        </div>
+                    </div> 
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ edit.position.label() }}{{ edit.position(class_="form-control") }}</li>
+                    </ul>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{edit.dorsal.label()}}{{ edit.dorsal(class_="form-control") }}</li>
+                    </ul>      
+                </div>
+                <!-- /card -->
+                <div class="edit-form-inputs">
+                    {{ edit.id }}
+                    {{edit.email.label()}}{{ edit.email(class_="form-control") }}
+                    {{edit.birthday.label()}}{{ edit.birthday(class_="form-control") }}
+                    {{edit.height.label()}}{{ edit.height(class_="form-control") }}
+                    {{edit.weight.label()}}{{ edit.weight(class_="form-control") }}
+                    {{ edit.submit(class_="btn-uptc") }}
+                    
+                </div>
+            </div>
+        </form>
+    {% else %}
+
+    {% endif %}
+{% endblock %}
+
+<!-- login_form.email(class_="form-control", placeholder="Email") -->

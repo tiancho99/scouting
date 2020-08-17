@@ -1,0 +1,25 @@
+{% import "navbar.html" as navbar %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends 'base.html' %}
+{% block title %} {{ super() }} | View {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/view.css') }}">
+{% endblock %}
+
+{% block navbar %}
+    {% if user.id_coach %}
+        {{ navbar.coach(logout, user) }}
+    {% elif user.id_athlete %}
+        {{ navbar.athlete(logout, user) }}
+    {% else %}
+        {{ navbar.nobody() }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ wtf.quick_form(delete)}}
+{% endblock %}
+
+<!-- login_form.email(class_="form-control", placeholder="Email") -->

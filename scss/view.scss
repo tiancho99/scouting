@@ -1,0 +1,65 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100&display=swap');
+
+$uptc-color: #e4a900;
+$border-color: #dfdfdf;
+$bg-color: #fafafa;
+$inside-color: #ffffff;
+
+
+.navbar{
+    width: 100%;
+    .navbar-brand {
+        img{
+            
+            max-height: 100px;
+   
+        }
+    }
+}
+body{
+    background-color: $inside-color;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100vh;
+    .alert{
+        width: 100%;
+    }
+    .content{
+        @include make-container();
+        margin: 0;
+        padding: 0; 
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        .card{
+            margin-top: 50px;
+            background-color: $bg-color;
+            img{
+                height: 300px;
+                object-fit: initial;
+                // object-position: center;
+            }
+        }
+    }
+    #footer {
+        display: flex;
+        align-self: flex-end;
+        width: 100%;
+        height: 15%;
+        margin-top: 50px;
+        font-weight: 500;
+        align-items: center;
+        background: linear-gradient(to right, rgba(212,159,26,1) 0%, rgba(245,183,26,1) 71%, rgba(232,188,84,1) 98%, rgba(232,188,84,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d49f1a', endColorstr='#e8bc54', GradientType=1 );
+        @include media-breakpoint-up(md) { 
+            
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+    }
+}
