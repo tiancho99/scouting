@@ -1,3 +1,4 @@
+from flask import jsonify
 from .models import Person, Athlete, Game, GameSchema, db
 
 def get_Person(email):
@@ -14,11 +15,11 @@ def get_Athlete_by_dorsal(dorsal):
 
 
 def get_Games():
-    # games_schema = GameSchema(many=True)
-    games_schema = GameSchema()
-    games = Game.query.order_by(Game.id).first()
-    # return games_schema.dump(games, many=True)
-    return games_schema.dump(games)
+    games_schema = GameSchema(many=True)
+    games = Game.query.all()
+    result = games_schema.dump(games)
+
+    return jsonify(result)
 
 
 def put_Athlete(id, password, name, lastname, birthday, biography, image, height, weight, dorsal, position):

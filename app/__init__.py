@@ -26,6 +26,7 @@ def create_app():
     Bootstrap(app)
     db.init_app(app)
     ma.init_app(app)
+    db.create_all()
    
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'

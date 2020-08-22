@@ -12,10 +12,6 @@ from app.mysql_service import get_Games
 def home(current):
     logout = logout_form()
     user = current_user
-    games = get_Games()
-    print(games)
-    for game in games:
-        jsonify({'game': game})
 
     if logout.validate_on_submit():
         return redirect(url_for('auth.logout'))
@@ -23,7 +19,15 @@ def home(current):
     context = {
         'user': user,
         'logout': logout,
-        # 'games': games,
+        'games': games,
     }
     return render_template('home.html', **context)
 
+@profile.route('/games')
+@login_required
+def games():
+    games = get_Games()
+    # print('GAMES')
+    # print(games)
+    if games:
+        return games

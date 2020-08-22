@@ -53,10 +53,11 @@ onload="loadCalendar()"
         <!-- calendar -->
         <div class="calendar">
             <div class="calendar__head">
-                <P>Month</P>
+                <p id="month_label"></p>
+                <p id="year_label"></p>
                 <div class="calendar__arrows">
-                    <div class="calendar__left">&#60</div>
-                    <div class="calendar__right">&#62</div>
+                    <div class="calendar__left" id="calendar__left">&#60</div>
+                    <div class="calendar__right" id="calendar__right">&#62</div>
                 </div>
             </div>
             <div class="calendar__body">
@@ -75,11 +76,7 @@ onload="loadCalendar()"
 
 {% block scripts %}
     {{ super() }}
-    <script>
-        function loadCalendar(){
-            
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 {% endblock %}
 
 

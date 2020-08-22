@@ -9910,6 +9910,10 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.invisible {
+  display: none;
+}
+
 .navbar {
   width: 100%;
 }
