@@ -1,6 +1,6 @@
 {% macro calendar() -%}
         {% for i in range(30) %}
-        <div class="calendar__day day-{{ i+1 }}" id="day-{{ i+1 }}" data-number="{{ i+1 }}">{{ i+1 }}</div>
+        <div class="calendar__day day-{{ i+1 }}" id="day-{{ i+1 }}" data-number="{{ i+1 }}"> <span>{{ i+1 }}</span> </div>
         {% endfor %}
         <div class="calendar__day" id="day-31" data-number="31"></div>
         <div class="calendar__day"></div>

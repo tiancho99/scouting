@@ -60,7 +60,7 @@ onload="loadCalendar()"
                     <div class="calendar__right" id="calendar__right">&#62</div>
                 </div>
             </div>
-            <div class="calendar__body">
+            <div class="calendar__body" id="calendar__body">
                 {{ calendar() }}
             </div>
         </div>
@@ -77,6 +77,7 @@ onload="loadCalendar()"
 {% block scripts %}
     {{ super() }}
     <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    
 {% endblock %}
 
 

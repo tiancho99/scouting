@@ -108,8 +108,8 @@ class Coach(db.Model):
 class Game(db.Model):
     __tablename__= 'game'
 
-    def __init__(self, location, training):
-        self.id = strftime('%Y-%m-%d')
+    def __init__(self, id, location, training):
+        self.id = id
         self.location = location
         self.training = training
 

@@ -9971,6 +9971,7 @@ body .content .calendar {
   }
 }
 body .content .calendar .calendar__head {
+  cursor: default;
   display: flex;
   width: 100%;
   height: 15%;
@@ -9992,10 +9993,87 @@ body .content .calendar .calendar__head .calendar__arrows {
   width: 100%;
   justify-content: flex-end;
 }
+body .content .calendar .calendar__head .calendar__arrows .calendar__left {
+  text-align: center;
+  border-radius: 0.25rem;
+  margin-right: 10px;
+  height: 25px;
+  width: 25px;
+}
+body .content .calendar .calendar__head .calendar__arrows .calendar__right {
+  text-align: center;
+  height: 25px;
+  width: 25px;
+  border-radius: 0.25rem;
+}
+body .content .calendar .calendar__head .calendar__arrows .calendar__left:hover {
+  cursor: pointer;
+  background-color: #d19b00;
+}
+body .content .calendar .calendar__head .calendar__arrows .calendar__right:hover {
+  cursor: pointer;
+  background-color: #d19b00;
+}
 body .content .calendar .calendar__body {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   height: 100%;
+}
+body .content .calendar .calendar__body .calendar__overlay {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+  color: white;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+body .content .calendar .calendar__body .calendar__overlay .overlay__close-btn {
+  align-self: flex-end;
+  height: fit-content;
+  width: fit-content;
+  margin: 0px 10px;
+  cursor: pointer;
+  font-size: 30px;
+}
+body .content .calendar .calendar__body .calendar__overlay .overlay__content {
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+body .content .calendar .calendar__body .calendar__overlay .overlay__content form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+body .content .calendar .calendar__body .calendar__overlay .overlay__content form input[type=text], body .content .calendar .calendar__body .calendar__overlay .overlay__content form input[type=time], body .content .calendar .calendar__body .calendar__overlay .overlay__content form input[type=submit] {
+  border: none;
+  border-radius: 0.25rem;
+  display: block;
+  width: 100%;
+  height: 40px;
+}
+body .content .calendar .calendar__body .calendar__overlay .overlay__content form input[type=radio] {
+  margin-right: 20px;
+}
+body .content .calendar .calendar__body .calendar__overlay .overlay__content form label {
+  margin-right: 5px;
+  width: auto;
+}
+body .content .calendar .calendar__body .calendar__overlay .overlay__content form input[type=submit] {
+  background-color: #e4a900;
+  border: none;
+  border-radius: 0.25rem;
 }
 body .content .calendar .calendar__body .calendar__day {
   background-color: #fafafa;
@@ -10003,10 +10081,16 @@ body .content .calendar .calendar__body .calendar__day {
   width: 14.28%;
   height: 20%;
 }
+body .content .calendar .calendar__body .calendar__day .badge {
+  margin-top: 3spx;
+}
 @media (min-width: 1200px) {
   body .content .calendar .calendar__body .calendar__day {
     padding: 5px;
   }
+}
+body .content .calendar .calendar__body .calendar__day:hover {
+  cursor: pointer;
 }
 body #footer {
   display: flex;

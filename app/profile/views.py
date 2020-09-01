@@ -1,10 +1,10 @@
-from flask import render_template, redirect, url_for, jsonify
+from flask import render_template, redirect, url_for, jsonify, request, Markup
 from flask_login import login_required, current_user
 
 
 from . import profile
 from app.forms import logout_form
-from app.mysql_service import get_Games
+from app.mysql_service import get_Games, put_Game
 
 
 @profile.route('/home/<string:current>')
@@ -12,6 +12,7 @@ from app.mysql_service import get_Games
 def home(current):
     logout = logout_form()
     user = current_user
+    game_form_url = url_for('profile.add_game')
 
     if logout.validate_on_submit():
         return redirect(url_for('auth.logout'))
@@ -20,6 +21,7 @@ def home(current):
         'user': user,
         'logout': logout,
         'games': games,
+        'game_form_url': game_form_url,
     }
     return render_template('home.html', **context)
 
@@ -27,7 +29,16 @@ def home(current):
 @login_required
 def games():
     games = get_Games()
-    # print('GAMES')
-    # print(games)
     if games:
         return games
+
+@profile.route('/add_game', methods=['POST'])
+@login_required
+def add_game():
+    date = '{} {}'.format(request.form.get('date'),request.form.get('time'))
+    location = request.form.get('location')
+    training = request.form.get('training')
+    
+    put_Game(date, location, training=='true')
+    user = current_user
+    return redirect(url_for('profile.home', current=user.name))

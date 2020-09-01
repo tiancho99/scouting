@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100&display=swap');
 
 $uptc-color: #e4a900;
+$uptc-color-selected: #d19b00;
 $border-color: #dfdfdf;
 $bg-color: #fafafa;
 $inside-color: #ffffff;
@@ -62,8 +63,9 @@ body{
                 width: 50%;
                 height: 80%;
             }
-            
+
             .calendar__head{
+                cursor: default;
                 display: flex;
                 width: 100%;
                 height: 15%;
@@ -83,14 +85,93 @@ body{
                     display: flex;
                     width: 100%;
                     justify-content: flex-end;
-    
+                    .calendar__left{
+                        text-align: center;
+                        border-radius: 0.25rem;
+                        margin-right: 10px;
+                        height: 25px;
+                        width: 25px;
+                    }
+                    .calendar__right{
+                        text-align: center;
+                        height: 25px;
+                        width: 25px;
+                        border-radius: 0.25rem;
+                    }
+                    .calendar__left:hover{
+                        cursor: pointer;
+                        background-color: $uptc-color-selected;
+                    }
+                    .calendar__right:hover{
+                        cursor: pointer;
+                        background-color: $uptc-color-selected;
+                    }
                 }
             }
             .calendar__body{
+                position: relative;
                 display: flex;
                 flex-wrap: wrap;
                 height: 100%;
+                .calendar__overlay{
+                    display: flex;
+                    flex-direction: column;
+                    align-content: flex-end;
+                    color: white;
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.8);
+                    .overlay__close-btn{
+                        align-self: flex-end;
+                        height: fit-content;
+                        width: fit-content;
+                        margin: 0px 10px;
+                        cursor: pointer;
+                        font-size: 30px;
+                    }
+                    .overlay__content{
+                        width: 100%;
+                        height: 100%;
+                        padding: 30px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        form{
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: center;
+                            padding-bottom: 40px;
+                            input[type=text], input[type=time], input[type=submit]{
+                                border: none;
+                                border-radius: 0.25rem;
+                                display: block;
+                                width: 100%;
+                                height: 40px;
+                            }
+                            input[type=radio]{
+                                margin-right: 20px;
+                            }
+                            label{
+                                margin-right: 5px;
+                                width: auto;
+                            }
+                            input[type=submit]{
+                                background-color: $uptc-color;
+                                border: none;
+                                border-radius: 0.25rem;
+                            }
+                        }
+                    }
+                }
                 .calendar__day{
+                    .badge{
+                        margin-top: 3spx;
+                    }
                     @include media-breakpoint-up(xs){
                         background-color: $bg-color;
                         border: 1px solid $border-color;
@@ -101,6 +182,9 @@ body{
                         padding: 5px;
                     }
 
+                }
+                .calendar__day:hover{
+                    cursor: pointer;
                 }
             }
         }

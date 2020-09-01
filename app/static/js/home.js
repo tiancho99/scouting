@@ -18,8 +18,7 @@ const months = {
 }
 let gameList = []
 
-function loadCalendar(games){
-    
+function loadCalendar(){
     const $actualMonth = document.getElementById('month_label')
     $actualMonth.innerHTML = months[mm]
     $actualMonth.dataset.number = mm
@@ -40,9 +39,8 @@ function fillCalendar(){
 
         })
         .then((games)=>{
-            console.log(games)
+            
             gameList = games
-
             selectCalendar()
         })
         
@@ -184,8 +182,95 @@ function removeGames(){
     }
 }
 
+function addClickEvent(Element, func){
+    Element.addEventListener('click', func)
+}
 
 function viewDay(ev){
     ev.preventDefault()
-    console.log(ev.target.dataset.number)
+    const day = ev.target.dataset.number
+    const $calendarBody = document.getElementById('calendar__body')
+    const overlay = document.createElement('div')
+    const divContent = document.createElement('div')
+    const closeBtn = document.createElement('div')
+    const x = document.createTextNode('x')
+    
+    addClickEvent(closeBtn, closeViewDay)
+
+
+    closeBtn.classList.add('overlay__close-btn')
+    overlay.classList.add('calendar__overlay')
+    divContent.classList.add('overlay__content')
+    overlay.setAttribute('id', 'calendar__overlay')
+
+
+    closeBtn.appendChild(x)
+    overlay.appendChild(closeBtn)
+    overlay.appendChild(divContent)
+    $calendarBody.appendChild(overlay)
+    fillOverlayContent(divContent, day)
+}
+
+function closeViewDay(){
+    const overlay = document.getElementById('calendar__overlay')
+    const parent = overlay.parentNode
+    parent.removeChild(overlay)
+}
+
+function fillOverlayContent(div, day){
+    const month = document.getElementById('month_label').dataset.number
+    const year = document.getElementById('year_label').dataset.number
+    const date = document.createElement('p')
+    const dateTxt = document.createTextNode(`${day} de ${months[month]} del ${year}`)
+    const form = document.createElement('form')
+    const locationInput = document.createElement('input')
+    const timeInput = document.createElement('input')
+    const trainingRadio = document.createElement('input')
+    const gameRadio = document.createElement('input')
+    const trainigLabel = document.createElement('label')
+    const gameLabel = document.createElement('label')
+    const training = document.createTextNode('Entrenamiento')
+    const game = document.createTextNode('Partido')
+    const submitBtn = document.createElement('input')
+    const dateInput = document.createElement('input')
+
+    date.appendChild(dateTxt)
+    form.setAttribute('action', '/profile/add_game')
+    form.setAttribute('method', 'POST')
+    locationInput.setAttribute('type', 'text')
+    locationInput.setAttribute('name', 'location')
+    locationInput.setAttribute('placeholder', 'Lugar')
+    locationInput.setAttribute('required','')
+    timeInput.setAttribute('type', 'time')
+    timeInput.setAttribute('name', 'time')
+    timeInput.setAttribute('required','')
+    gameRadio.setAttribute('type', 'radio')
+    gameRadio.setAttribute('name', 'training')
+    gameRadio.setAttribute('id', 'game')
+    gameRadio.setAttribute('value', 'false')
+    gameRadio.setAttribute('required','')
+    trainingRadio.setAttribute('type', 'radio')
+    trainingRadio.setAttribute('name', 'training')
+    trainingRadio.setAttribute('id', 'training')
+    trainingRadio.setAttribute('value', 'true')
+    trainigLabel.setAttribute('for', 'training')
+    gameLabel.setAttribute('for', 'game')
+    submitBtn.setAttribute('type', 'submit')
+    dateInput.setAttribute('type', 'hidden')
+    dateInput.setAttribute('value', `${year}-${month}-${day}`)
+    dateInput.setAttribute('name', 'date')
+
+    div.appendChild(date)
+    form.appendChild(locationInput)
+    form.appendChild(timeInput)
+    trainigLabel.appendChild(training)
+    gameLabel.appendChild(game)
+    form.appendChild(trainigLabel)
+    form.appendChild(trainingRadio)
+    form.appendChild(gameLabel)
+    form.appendChild(gameRadio)
+    form.appendChild(submitBtn)
+    form.appendChild(dateInput)
+    div.appendChild(form)
+
 }

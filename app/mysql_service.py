@@ -21,6 +21,11 @@ def get_Games():
 
     return jsonify(result)
 
+def put_Game(datetime, location, training):
+    game = Game(datetime, location, training)
+    db.session.add(game)
+    db.session.commit()
+
 
 def put_Athlete(id, password, name, lastname, birthday, biography, image, height, weight, dorsal, position):
     athlete = Athlete(height, weight, dorsal, position)
