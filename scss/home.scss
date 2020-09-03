@@ -172,6 +172,12 @@ body{
                     .badge{
                         margin-top: 3px;
                     }
+                    .badge-success:hover{
+                        background-color: #1d7932;
+                    }
+                    .badge-info:hover{
+                        background-color: #116b79;
+                    }
                     @include media-breakpoint-up(xs){
                         background-color: $bg-color;
                         border: 1px solid $border-color;
@@ -185,6 +191,7 @@ body{
                 }
                 .calendar__day:hover{
                     cursor: pointer;
+                    background-color: lightgray;
                 }
             }
         }

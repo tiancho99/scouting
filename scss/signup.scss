@@ -45,12 +45,12 @@ body{
                 width: 60%
                 
             }
-            @include media-breakpoint-up(lg) { 
+            @include media-breakpoint-up(md) { 
                 width: 50%
             }
-            .file{
-                margin-top: 15px;
-            }
+            // .file{
+            //     margin-top: 15px;
+            // }
             input[type="submit"]{
                 background-color: $uptc-color;
                 border-color: $border-color;

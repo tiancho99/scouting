@@ -19,34 +19,71 @@
 {% endblock %}
 
 {% block content %}
-    <form action="/crud/assess" method="POST">
-        {{ assess.csrf_token }}
-        {{ assess.player.player.label }}
-        {{ assess.player.player(class="form-control") }}
-        {{ assess.played_time.label }}
-        {{ assess.played_time(type="number", class="form-control") }}
-        {{ assess.saves.label }}
-        {{ assess.saves(type="number", class="form-control") }}
-        {{ assess.clearances.label }}
-        {{ assess.clearances(type="number", class="form-control") }}
-        {{ assess.centered_passes.label }}
-        {{ assess.centered_passes(type="number", class="form-control") }}
-        {{ assess.assists.label }}
-        {{ assess.assists(type="number", class="form-control") }}
-        {{ assess.interceptions.label }}
-        {{ assess.interceptions(type="number", class="form-control") }}
-        {{ assess.short_passes.label }}
-        {{ assess.short_passes(type="number", class="form-control") }}
-        {{ assess.long_passes.label }}
-        {{ assess.long_passes(type="number", class="form-control") }}
-        {{ assess.scored_goals.label }}
-        {{ assess.scored_goals(type="number", class="form-control") }}
-        {{ assess.scored_penalties.label }}
-        {{ assess.scored_penalties(type="number", class="form-control") }}
-        {{ assess.scored_freekicks.label }}
-        {{ assess.scored_freekicks(type="number", class="form-control") }}
-        {{ assess.submit(class="btn btn-warning my-2 my-sm-0 ml-5")}}
-    </form>
-{% endblock %}
+    <h1>Calificar jugadores</h1>
+    <div class="content">
+        <form action="/crud/assess" method="POST">
+            {{ assess.csrf_token }}
+            <div class="form-group  required">
+                {{ assess.player.player.label }}
+                {{ assess.player.player(class="form-control") }}
+              
+            </div>
+            <div class="form-group  required">
+                {{ assess.matches.label }}
+                {{ assess.matches(class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.played_time.label }}
+                {{ assess.played_time(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.saves.label }}
+                {{ assess.saves(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.clearances.label }}
+                {{ assess.clearances(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.centered_passes.label }}
+                {{ assess.centered_passes(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.assists.label }}
+                {{ assess.assists(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.interceptions.label }}
+                {{ assess.interceptions(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.short_passes.label }}
+                {{ assess.short_passes(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.long_passes.label }}
+                {{ assess.long_passes(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.scored_goals.label }}
+                {{ assess.scored_goals(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.scored_penalties.label }}
+                {{ assess.scored_penalties(type="number", class="form-control") }}
+            </div>
+            <div class="form-group  required">
+                {{ assess.scored_freekicks.label }}
+                {{ assess.scored_freekicks(type="number", class="form-control") }}
+            </div>
 
+            {{ assess.submit(class="btn btn-warning")}}
+        </form>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/assess.js') }}"></script>
+    
+{% endblock %}
 <!-- login_form.email(class_="form-control", placeholder="Email") -->

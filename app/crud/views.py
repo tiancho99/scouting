@@ -1,5 +1,6 @@
 from flask import render_template, url_for, request, Markup, flash, redirect
 from flask_login import current_user, login_required
+from datetime import datetime
 
 from . import crud
 from app.forms import logout_form, create_edit_form, search_person_form, edit_form, delete_person_form, assess_form
@@ -85,9 +86,32 @@ def delete():
 def assess():
     logout = logout_form()
     assess = assess_form()
-    
+    if request.args:
+        year = request.args.get('year')
+        month = request.args.get('month')
+        day = request.args.get('day')
+        hour = request.args.get('hour')
+        date_str = '{}-{}-{} {}:00'.format(year, month, day, hour)
+        date = datetime.strptime(date_str,'%Y-%m-%d %H:%M:%S')
+        assess.matches.default = date
+        assess.process()
+
     if assess.validate_on_submit():
-        pass
+        player = assess.player.player.data
+        match = match.matches.data
+        played_time = assess.played_time.data
+        saves = assess.saves.data
+        clearances = assess.clearances.data
+        centered_passes = assess.centered_passes.data
+        assists = assess.assists.data
+        interceptions = assess.interceptions.data
+        short_passes = assess.short_passes.data
+        long_passes = assess.long_passes.data
+        scored_goals = assess.scored_goals.data
+        scored_penalties = assess.scored_penalties.data
+        scored_freekicks = assess.saves.data
+        return Markup(assess.matches.data)
+
 
     context = {
         'assess': assess,

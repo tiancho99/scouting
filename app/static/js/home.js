@@ -33,7 +33,7 @@ function loadCalendar(){
 }
 
 function fillCalendar(){
-    fetch('http://127.0.0.1:5000/profile/games')
+    fetch('/profile/games')
         .then((response)=>{
             return jsonify_response = response.json()
 
@@ -164,10 +164,11 @@ function addGame(gameDate, game){
     badge.appendChild(text)
     badge.classList.add('badge')
     if(game.training){
-        badge.classList.add('badge-secondary')
+        badge.classList.add('badge-success')
     }else{
-        badge.classList.add('badge-primary')
+        badge.classList.add('badge-info')
     }
+    addClickEvent(badge, calificar)
     $calendarDay.appendChild(badge)
 
     
@@ -188,6 +189,7 @@ function addClickEvent(Element, func){
 
 function viewDay(ev){
     ev.preventDefault()
+
     const day = ev.target.dataset.number
     const $calendarBody = document.getElementById('calendar__body')
     const overlay = document.createElement('div')
@@ -274,3 +276,15 @@ function fillOverlayContent(div, day){
     div.appendChild(form)
 
 }
+
+function calificar(ev){
+    ev.stopPropagation();
+    year = document.getElementById('year_label').dataset.number
+    month = document.getElementById('month_label').dataset.number
+    day = ev.target.parentNode.dataset.number
+    hour = ev.target.innerHTML
+    window.location.replace(`/crud/assess?year=${year}&month=${month}&day=${day}&hour=${hour}`)
+}
+
+/* <p id="month_label"></p>
+<p id="year_label"></p> */

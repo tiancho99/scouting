@@ -1,5 +1,6 @@
 from flask import jsonify
 from .models import Person, Athlete, Game, GameSchema, db
+from sqlalchemy import desc
 
 def get_Person(email):
     person = Person.query.filter_by(id=email).first()
@@ -20,6 +21,10 @@ def get_Games():
     result = games_schema.dump(games)
 
     return jsonify(result)
+
+def get_games():
+    games = Game.query.order_by(desc(Game.id)).all()
+    return games
 
 def put_Game(datetime, location, training):
     game = Game(datetime, location, training)

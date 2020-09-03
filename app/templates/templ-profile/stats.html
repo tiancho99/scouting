@@ -1,0 +1,33 @@
+{% import "navbar.html" as navbar %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends 'base.html' %}
+{% block title %} {{ super() }} | View {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+{% endblock %}
+
+{% block navbar %}
+    {% if user.id_coach %}
+        {{ navbar.coach(logout, user) }}
+    {% elif user.id_athlete %}
+        {{ navbar.athlete(logout, user) }}
+    {% else %}
+        {{ navbar.nobody() }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>Calificar jugadores</h1>
+    <div class="content">
+        <form action="/profile/stats" method="POST">
+            
+        </form>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <!-- <script src="{{ url_for('static', filename='js/assess.js') }}"></script> -->
+    
+{% endblock %}

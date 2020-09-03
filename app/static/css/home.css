@@ -10082,7 +10082,13 @@ body .content .calendar .calendar__body .calendar__day {
   height: 20%;
 }
 body .content .calendar .calendar__body .calendar__day .badge {
-  margin-top: 3spx;
+  margin-top: 3px;
+}
+body .content .calendar .calendar__body .calendar__day .badge-success:hover {
+  background-color: #1d7932;
+}
+body .content .calendar .calendar__body .calendar__day .badge-info:hover {
+  background-color: #116b79;
 }
 @media (min-width: 1200px) {
   body .content .calendar .calendar__body .calendar__day {
@@ -10091,6 +10097,7 @@ body .content .calendar .calendar__body .calendar__day .badge {
 }
 body .content .calendar .calendar__body .calendar__day:hover {
   cursor: pointer;
+  background-color: lightgray;
 }
 body #footer {
   display: flex;
