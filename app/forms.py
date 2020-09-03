@@ -1,6 +1,6 @@
 from flask import flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField, DateField, SelectField, TextAreaField, HiddenField
+from wtforms import StringField, PasswordField, SubmitField, FileField, DateField, SelectField, TextAreaField, HiddenField, IntegerField, FormField
 from wtforms.validators import InputRequired, ValidationError, EqualTo, StopValidation
 import re
 
@@ -127,3 +127,19 @@ class edit_form(FlaskForm):
     dorsal = StringField('Dorsal', validators=[avalidate_dorsal])
     position = SelectField('Position', choices= choices)
     submit = SubmitField()
+
+class assess_form(FlaskForm):
+    player = FormField(search_person_form)
+    played_time = IntegerField('Minutos jugados',default=0)
+    saves = IntegerField('Atajadas',default=0)
+    clearances = IntegerField('Despejes',default=0)
+    centered_passes = IntegerField('Centros',default=0)
+    assists = IntegerField('Asistencias',default=0)
+    interceptions = IntegerField('Intercepciones',default=0)
+    short_passes = IntegerField('Pases cortos',default=0)
+    long_passes = IntegerField('Pases largos',default=0)
+    scored_goals = IntegerField('Goles de campo',default=0)
+    scored_penalties = IntegerField('Goles de penal',default=0)
+    scored_freekicks = IntegerField('Goles de tiro libre',default=0)
+    submit = SubmitField('Enviar')
+    
