@@ -1,0 +1,52 @@
+{% import "navbar.html" as navbar %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends 'base.html' %}
+{% block title %} {{ super() }} | View {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+{% endblock %}
+
+{% block navbar %}
+    {% if user.id_coach %}
+        {{ navbar.coach(logout, user) }}
+    {% elif user.id_athlete %}
+        {{ navbar.athlete(logout, user) }}
+    {% else %}
+        {{ navbar.nobody() }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <form action="/crud/assess" method="POST">
+        {{ assess.csrf_token }}
+        {{ assess.player.player.label }}
+        {{ assess.player.player(class="form-control") }}
+        {{ assess.played_time.label }}
+        {{ assess.played_time(type="number", class="form-control") }}
+        {{ assess.saves.label }}
+        {{ assess.saves(type="number", class="form-control") }}
+        {{ assess.clearances.label }}
+        {{ assess.clearances(type="number", class="form-control") }}
+        {{ assess.centered_passes.label }}
+        {{ assess.centered_passes(type="number", class="form-control") }}
+        {{ assess.assists.label }}
+        {{ assess.assists(type="number", class="form-control") }}
+        {{ assess.interceptions.label }}
+        {{ assess.interceptions(type="number", class="form-control") }}
+        {{ assess.short_passes.label }}
+        {{ assess.short_passes(type="number", class="form-control") }}
+        {{ assess.long_passes.label }}
+        {{ assess.long_passes(type="number", class="form-control") }}
+        {{ assess.scored_goals.label }}
+        {{ assess.scored_goals(type="number", class="form-control") }}
+        {{ assess.scored_penalties.label }}
+        {{ assess.scored_penalties(type="number", class="form-control") }}
+        {{ assess.scored_freekicks.label }}
+        {{ assess.scored_freekicks(type="number", class="form-control") }}
+        {{ assess.submit(class="btn btn-warning my-2 my-sm-0 ml-5")}}
+    </form>
+{% endblock %}
+
+<!-- login_form.email(class_="form-control", placeholder="Email") -->
