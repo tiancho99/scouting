@@ -2,7 +2,7 @@ from flask import render_template, url_for, request, Markup, flash, redirect
 from flask_login import current_user, login_required
 
 from . import crud
-from app.forms import logout_form, create_edit_form, search_person_form, edit_form, delete_person_form
+from app.forms import logout_form, create_edit_form, search_person_form, edit_form, delete_person_form, assess_form
 from app.mysql_service import get_Person, put_Athlete, get_People, update_Athlete, delete_Person
 
 @crud.route('/view', methods=['GET', 'POST'])
@@ -79,3 +79,20 @@ def delete():
         'delete': delete,
     }
     return render_template('delete.html', **context)
+
+@crud.route('/assess', methods=['GET', 'POST'])
+@login_required
+def assess():
+    logout = logout_form()
+    assess = assess_form()
+    
+    if assess.validate_on_submit():
+        pass
+
+    context = {
+        'assess': assess,
+        'user': current_user,
+        'logout': logout
+    }
+
+    return render_template('assess.html', **context)

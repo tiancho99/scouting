@@ -170,7 +170,7 @@ body{
                 }
                 .calendar__day{
                     .badge{
-                        margin-top: 3spx;
+                        margin-top: 3px;
                     }
                     @include media-breakpoint-up(xs){
                         background-color: $bg-color;
