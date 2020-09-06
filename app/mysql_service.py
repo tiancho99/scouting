@@ -1,5 +1,5 @@
 from flask import jsonify
-from .models import Person, Athlete, Game, GameSchema, Position, Record, db
+from .models import Person, Athlete, Game, GameSchema, Position, db
 from sqlalchemy import desc, func
 
 def get_Person(email):
@@ -71,20 +71,8 @@ def get_positions():
     return positions
 
 def get_stats():
-    # goals = db.session.query(func.sum(Record.played_time),
-    #                             func.sum(Record.saves),
-    #                             func.sum(Record.clearances),
-    #                             func.sum(Record.centered_passes),
-    #                             func.sum(Record.assists),
-    #                             func.sum(Record.interceptions),
-    #                             func.sum(Record.short_passes),
-    #                             func.sum(Record.long_passes),
-    #                             func.sum(Record.scored_goals),
-    #                             func.sum(Record.scored_penalties),
-    #                             func.sum(Record.scored_freekicks),
-    #                             Record.id_athlete).group_by(Record.id_athlete).order_by(desc(func.sum(Record.played_time))).all()
-    #                             # Record.id_athlete).group_by(Record.id_athlete).order_by(desc(func.sum(Record.saves+Record.centered_passes))).all()
-    # return
-    return db.session.query(Person, Athlete, Record).filter(Person.id_athlete==Athlete.id).filter(Athlete.id == Record.id_athlete).all()
+    records = Athlete.query.first()
+    return records
+
 def get_athlete_stats():
     pass

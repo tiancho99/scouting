@@ -52,6 +52,24 @@ class Person(UserMixin, db.Model):
 
         return check_password_hash(self.password, password)
 
+#! Record
+record = db.Table('record',
+    db.Column('id_game', db.String(100), db.ForeignKey('game.id'), primary_key=True),
+    db.Column('id_athlete', db.Integer, db.ForeignKey('athlete.id'), primary_key=True),
+    db.Column('played_time', db.Integer, nullable=False),
+    db.Column('saves', db.Integer, nullable=True),
+    db.Column('clearances', db.Integer, nullable=True),
+    db.Column('centered_passes', db.Integer, nullable=True),
+    db.Column('assists', db.Integer, nullable=True),
+    db.Column('interceptions', db.Integer, nullable=True),
+    db.Column('short_passes', db.Integer, nullable=True),
+    db.Column('long_passes', db.Integer, nullable=True),
+    db.Column('scored_goals', db.Integer, nullable=True),
+    db.Column('scored_penalties', db.Integer, nullable=True),
+    db.Column('scored_freekicks', db.Integer, nullable=True)
+)
+
+
 #! Atlete
 class Athlete(db.Model):
     __tablename__ = 'athlete'
@@ -76,7 +94,9 @@ class Athlete(db.Model):
 
     person = db.relationship('Person', backref='athlete', lazy=True, uselist=False)
 
-    record = db.relationship('Record', backref='athlete', lazy=True)
+    record = db.relationship('Game', secondary=record, lazy='subquery', backref=db.backref('athlete', lazy=True))
+
+
 
 #!position
 class Position(db.Model):
@@ -119,7 +139,6 @@ class Game(db.Model):
 
     training = db.Column('training', db.Boolean, nullable=False)
     
-    record = db.relationship('Record', backref='game', lazy=True)
 
 # Game Schema
 class GameSchema(ma.Schema):
@@ -127,36 +146,3 @@ class GameSchema(ma.Schema):
         fields = ('id', 'location', 'training')
 
 
-#! Record
-class Record(db.Model):
-    __tablename__= 'record'
-
-    def __init__(self, id_game, id_athlete, played_time, saves, clearances, centered_passes, assists, interceptions, short_passes, long_passes, scored_goals, scored_penalties, scored_freekicks):
-        self.id = None
-        self.id_game = id_game
-        self.id_athlete = id_athlete
-        self.played_time = played_time
-        self.saves = saves
-        self.clearances = clearances
-        self.centered_passes = centered_passes
-        self.assists = assists
-        self.interceptions = interceptions
-        self.short_passes = short_passes
-        self.scored_goals = scored_goals
-        self.scored_penalties = scored_penalties
-        self.scored_freekicks = scored_freekicks
-
-    id = db.Column('id', db.Integer, primary_key=True)
-    id_game = db.Column(db.String(100), db.ForeignKey('game.id'), nullable=False)
-    id_athlete = db.Column(db.Integer, db.ForeignKey('athlete.id'), nullable=False)
-    played_time = db.Column('played_time', db.Integer, nullable=False)
-    saves = db.Column('saves', db.Integer, nullable=True)
-    clearances = db.Column('clearances', db.Integer, nullable=True)
-    centered_passes = db.Column('centered_passes', db.Integer, nullable=True)
-    assists = db.Column('assists', db.Integer, nullable=True)
-    interceptions = db.Column('interceptions', db.Integer, nullable=True)
-    short_passes = db.Column('short_passes', db.Integer, nullable=True)
-    long_passes = db.Column('long_passes', db.Integer, nullable=True)
-    scored_goals = db.Column('scored_goals', db.Integer, nullable=True)
-    scored_penalties = db.Column('scored_penalties', db.Integer, nullable=True)
-    scored_freekicks = db.Column('scored_freekicks', db.Integer, nullable=True)
