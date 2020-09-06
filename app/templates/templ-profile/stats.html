@@ -1,5 +1,7 @@
 {% import "navbar.html" as navbar %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% from "macros.html" import tableAthletes %}
+
 
 {% extends 'base.html' %}
 {% block title %} {{ super() }} | View {% endblock %}
@@ -20,7 +22,7 @@
 
 {% block content %}
     <h1>Estadisticas</h1>
-    <div class="content">
+    <div class="content" style="display: flex; flex-wrap: wrap; overflow: hidden;">
         <form action="/profile/stats" method="POST">
             <div class="form-group required">
                 {{ select.position.label }}
@@ -28,7 +30,32 @@
             </div>
             {{ select.submit(class="form-control") }}
         </form>
-        <p>los jugadores son</p>{{ athletes.record }}
+        {# 
+            <p>los jugadores son</p>{{ athletes }}
+        #}
+        <table border="1|0" style="display: block; overflow-x: scroll;">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    <th>dorsal</th>
+                    <th>Posicion</th>
+                    <th>played_time</th>
+                    <th>saves</th>
+                    <th>clearances</th>
+                    <th>centered_passes</th>
+                    <th>assists</th>
+                    <th>interceptions</th>
+                    <th>short_passes</th>
+                    <th>long_passes</th>
+                    <th>scored_goals</th>
+                    <th>scored_penalties</th>
+                    <th>scored_freekicks</th>
+                </tr>
+            </thead>
+            {{ tableAthletes(athletes) }}
+        </table>
     </div>
 {% endblock %}
 {% block scripts %}
