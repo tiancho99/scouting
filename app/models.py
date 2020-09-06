@@ -105,7 +105,7 @@ class Position(db.Model):
 
     description = db.Column('description', db.String(50), nullable=False)
 
-    athlete = db.relationship('Athlete', backref='pos', lazy=False, uselist=False)
+    athlete = db.relationship('Athlete', backref='pos', lazy=True, uselist=False)
 
 
 #!Coach
@@ -122,7 +122,7 @@ class Coach(db.Model):
 
     link = db.Column('link', db.String(500), nullable=True)
 
-    person = db.relationship('Person', backref='coach', lazy=False, uselist=False)
+    person = db.relationship('Person', backref='coach', lazy=True, uselist=False)
 
 #!Game
 class Game(db.Model):
