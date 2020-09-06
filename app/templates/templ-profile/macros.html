@@ -8,3 +8,26 @@
         <div class="calendar__day"></div>
         <div class="calendar__day"></div>
 {%- endmacro %}
+
+{% macro tableAthletes(records) -%}
+                {% for record in records %}
+                                <tr>
+                                        <th>person.athlete.id</th>
+                                        <th>person.athlete.name</th>
+                                        <th>person.athlete.dorsal</th>
+                                        <th>person.athlete.position.description</th>
+                                        <th>person..id.</th>
+                                        <th>person..id</th>
+                                        <th>person..id</th>
+                                        <th>person..id</th>
+                                        <th>person..id</th>
+                                        <th>person..id</th>
+                                        <th>person..id</th>
+                                        <th>person..id</th>
+                                        <th>person..id</th>
+                                        <th>person..id</th>
+                                        <th>person..id</th>
+                                </tr>
+                {% endfor %}
+                
+{%- endmacro %}

@@ -74,7 +74,7 @@ class Athlete(db.Model):
 
     position = db.Column('position', db.ForeignKey('position.id'))
 
-    person = db.relationship('Person', backref='athlete', lazy=False, uselist=False)
+    person = db.relationship('Person', backref='athlete', lazy=True, uselist=False)
 
     record = db.relationship('Record', backref='athlete', lazy=True)
 
@@ -147,11 +147,11 @@ class Record(db.Model):
         self.scored_freekicks = scored_freekicks
 
     id = db.Column('id', db.Integer, primary_key=True)
-    id_game = db.Column(db.String(12), db.ForeignKey('game.id'), nullable=False)
+    id_game = db.Column(db.String(100), db.ForeignKey('game.id'), nullable=False)
     id_athlete = db.Column(db.Integer, db.ForeignKey('athlete.id'), nullable=False)
     played_time = db.Column('played_time', db.Integer, nullable=False)
     saves = db.Column('saves', db.Integer, nullable=True)
-    clearences = db.Column('clearences', db.Integer, nullable=True)
+    clearances = db.Column('clearances', db.Integer, nullable=True)
     centered_passes = db.Column('centered_passes', db.Integer, nullable=True)
     assists = db.Column('assists', db.Integer, nullable=True)
     interceptions = db.Column('interceptions', db.Integer, nullable=True)

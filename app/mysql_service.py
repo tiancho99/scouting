@@ -1,6 +1,6 @@
 from flask import jsonify
-from .models import Person, Athlete, Game, GameSchema, db
-from sqlalchemy import desc
+from .models import Person, Athlete, Game, GameSchema, Position, Record, db
+from sqlalchemy import desc, func
 
 def get_Person(email):
     person = Person.query.filter_by(id=email).first()
@@ -14,6 +14,9 @@ def get_Athlete_by_dorsal(dorsal):
     athlete = Athlete.query.filter_by(dorsal=dorsal).first()
     return athlete
 
+def get_Athletes():
+    athletes = Person.query.all()
+    return athletes
 
 def get_Games():
     games_schema = GameSchema(many=True)
@@ -62,3 +65,26 @@ def update_Athlete(id, email, name, lastname, birthday, height, weight, dorsal, 
 def delete_Person(person):
     db.session.delete(person)
     db.session.commit()
+
+def get_positions():
+    positions = Position.query.all()
+    return positions
+
+def get_stats():
+    # goals = db.session.query(func.sum(Record.played_time),
+    #                             func.sum(Record.saves),
+    #                             func.sum(Record.clearances),
+    #                             func.sum(Record.centered_passes),
+    #                             func.sum(Record.assists),
+    #                             func.sum(Record.interceptions),
+    #                             func.sum(Record.short_passes),
+    #                             func.sum(Record.long_passes),
+    #                             func.sum(Record.scored_goals),
+    #                             func.sum(Record.scored_penalties),
+    #                             func.sum(Record.scored_freekicks),
+    #                             Record.id_athlete).group_by(Record.id_athlete).order_by(desc(func.sum(Record.played_time))).all()
+    #                             # Record.id_athlete).group_by(Record.id_athlete).order_by(desc(func.sum(Record.saves+Record.centered_passes))).all()
+    # return
+    return db.session.query(Person, Athlete, Record).filter(Person.id_athlete==Athlete.id).filter(Athlete.id == Record.id_athlete).all()
+def get_athlete_stats():
+    pass
