@@ -1,4 +1,4 @@
 *node_modules
 scss
-app/__pycache__*
+*.pyc
 *cache*
