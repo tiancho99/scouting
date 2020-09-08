@@ -1,6 +1,6 @@
 from flask import jsonify
-from .models import Person, Athlete, Game, GameSchema, db
-from sqlalchemy import desc
+from .models import Person, Athlete, Game, GameSchema, Position, record, db
+from sqlalchemy import desc, func
 
 def get_Person(email):
     person = Person.query.filter_by(id=email).first()
@@ -14,6 +14,9 @@ def get_Athlete_by_dorsal(dorsal):
     athlete = Athlete.query.filter_by(dorsal=dorsal).first()
     return athlete
 
+def get_Athletes():
+    athletes = Person.query.filter(Person.id_athlete!=None).all()
+    return athletes
 
 def get_Games():
     games_schema = GameSchema(many=True)
@@ -62,3 +65,44 @@ def update_Athlete(id, email, name, lastname, birthday, height, weight, dorsal, 
 def delete_Person(person):
     db.session.delete(person)
     db.session.commit()
+
+def get_positions():
+    positions = Position.query.all()
+    return positions
+
+def get_stats():
+    records = db.session.query(Person,
+                                func.sum(record.c.played_time),
+                                func.sum(record.c.saves),
+                                func.sum(record.c.clearances),
+                                func.sum(record.c.centered_passes),
+                                func.sum(record.c.assists),
+                                func.sum(record.c.interceptions),
+                                func.sum(record.c.short_passes),
+                                func.sum(record.c.long_passes),
+                                func.sum(record.c.scored_goals),
+                                func.sum(record.c.scored_penalties),
+                                func.sum(record.c.scored_freekicks),
+                                ).filter(Person.id_athlete==record.c.id_athlete).group_by(record.c.id_athlete).order_by(Person.name).all()
+    return records
+
+def get_stats_by_position(position):
+    if position==0:
+        return get_stats()
+    records = db.session.query(Person,
+                                func.sum(record.c.played_time),
+                                func.sum(record.c.saves),
+                                func.sum(record.c.clearances),
+                                func.sum(record.c.centered_passes),
+                                func.sum(record.c.assists),
+                                func.sum(record.c.interceptions),
+                                func.sum(record.c.short_passes),
+                                func.sum(record.c.long_passes),
+                                func.sum(record.c.scored_goals),
+                                func.sum(record.c.scored_penalties),
+                                func.sum(record.c.scored_freekicks),
+                                ).filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == position).group_by(record.c.id_athlete).all()
+    return records
+
+def get_athlete_stats():
+    pass

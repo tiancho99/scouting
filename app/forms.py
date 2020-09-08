@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, FileField, DateFiel
 from wtforms.validators import InputRequired, ValidationError, EqualTo, StopValidation
 import re
 
-from app.mysql_service import get_Athlete_by_dorsal, get_Person, get_People, get_games
+from app.mysql_service import get_Athlete_by_dorsal, get_Person, get_People, get_games, get_positions
 
 def validate_name(form, email):
     resultado = re.fullmatch('^[a-z]*[.][a-z 0-9]*', email.data)
@@ -132,7 +132,7 @@ class assess_form(FlaskForm):
     games = get_games()
     gameList = []
     for game in games:
-        choice = (game.id, game.id)
+        choice = ('{}'.format(game.id), '{}'.format(game.id))
         gameList.append(choice)
 
     player = FormField(search_person_form)
@@ -149,4 +149,13 @@ class assess_form(FlaskForm):
     scored_penalties = IntegerField('Goles de penal',default=0)
     scored_freekicks = IntegerField('Goles de tiro libre',default=0)
     submit = SubmitField('Enviar')
+
+class select_position_form(FlaskForm):
+    positions = get_positions()
+    position_list = [(0, 'Ver todos')]
+    for position in positions:
+        choice = ('{}'.format(position.id), '{}'.format(position.description))
+        position_list.append(choice)
     
+    position = SelectField('Agrupar por:', choices=position_list, validators=[InputRequired()])
+    submit = SubmitField('Enviar')
