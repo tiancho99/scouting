@@ -95,8 +95,10 @@ def assess():
         date = datetime.strptime(date_str,'%Y-%m-%d %H:%M:%S')
         assess.matches.default = date
         assess.process()
+    print(assess.validate_on_submit())
 
     if assess.validate_on_submit():
+        return Markup('hola')
         player = assess.player.player.data
         match = match.matches.data
         played_time = assess.played_time.data

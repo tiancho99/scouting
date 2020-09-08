@@ -83,23 +83,25 @@ def get_stats():
                                 func.sum(record.c.scored_goals),
                                 func.sum(record.c.scored_penalties),
                                 func.sum(record.c.scored_freekicks),
-                                ).filter(Person.id_athlete==record.c.id_athlete).group_by(record.c.id_athlete).all()
+                                ).filter(Person.id_athlete==record.c.id_athlete).group_by(record.c.id_athlete).order_by(Person.name).all()
     return records
 
 def get_stats_by_position(position):
+    if position==0:
+        return get_stats()
     records = db.session.query(Person,
-                            func.sum(record.c.played_time),
-                            func.sum(record.c.saves),
-                            func.sum(record.c.clearances),
-                            func.sum(record.c.centered_passes),
-                            func.sum(record.c.assists),
-                            func.sum(record.c.interceptions),
-                            func.sum(record.c.short_passes),
-                            func.sum(record.c.long_passes),
-                            func.sum(record.c.scored_goals),
-                            func.sum(record.c.scored_penalties),
-                            func.sum(record.c.scored_freekicks),
-                            ).filter(Person.id_athlete==record.c.id_athlete, Athlete.position==position).group_by(record.c.id_athlete).all()
+                                func.sum(record.c.played_time),
+                                func.sum(record.c.saves),
+                                func.sum(record.c.clearances),
+                                func.sum(record.c.centered_passes),
+                                func.sum(record.c.assists),
+                                func.sum(record.c.interceptions),
+                                func.sum(record.c.short_passes),
+                                func.sum(record.c.long_passes),
+                                func.sum(record.c.scored_goals),
+                                func.sum(record.c.scored_penalties),
+                                func.sum(record.c.scored_freekicks),
+                                ).filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == position).group_by(record.c.id_athlete).all()
     return records
 
 def get_athlete_stats():

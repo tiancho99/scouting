@@ -21,7 +21,7 @@
 {% block content %}
     <h1>Calificar jugadores</h1>
     <div class="content">
-        <form action="/crud/assess" method="POST">
+        <form action="{{url_for('crud.assess')}}" method="POST">
             {{ assess.csrf_token }}
             <div class="form-group  required">
                 {{ assess.player.player.label }}

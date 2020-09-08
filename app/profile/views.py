@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 
 from . import profile
-from app.forms import logout_form, select_position
+from app.forms import logout_form, select_position_form
 from app.mysql_service import get_Games, put_Game, get_Person, get_Athletes, get_People, get_stats,get_stats_by_position
 
 
@@ -44,13 +44,17 @@ def add_game():
     user = current_user
     return redirect(url_for('profile.home', current=user.name))
 
-@profile.route('/stats')
+@profile.route('/stats', methods=['GET', 'POST'])
 @login_required
 def stats():
-    # stat = get_stats()
-    # return '<p>\{}</p>'.format(stat)
-    select = select_position()
-    athletes = get_stats_by_position(1)
+    global athletes
+    select = select_position_form()
+    athletes = get_stats()
+    if select.validate_on_submit():
+        position = select.position.data
+        athletes = get_stats_by_position(position)
+
+        # return render_template('stats.html', **context)    
     context = {
         'select': select,
         'user': current_user,

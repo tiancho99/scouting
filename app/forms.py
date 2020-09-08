@@ -132,7 +132,7 @@ class assess_form(FlaskForm):
     games = get_games()
     gameList = []
     for game in games:
-        choice = (game.id, game.id)
+        choice = ('{}'.format(game.id), '{}'.format(game.id))
         gameList.append(choice)
 
     player = FormField(search_person_form)
@@ -150,12 +150,12 @@ class assess_form(FlaskForm):
     scored_freekicks = IntegerField('Goles de tiro libre',default=0)
     submit = SubmitField('Enviar')
 
-class select_position(FlaskForm):
+class select_position_form(FlaskForm):
     positions = get_positions()
-    position_list = []
+    position_list = [(0, 'Ver todos')]
     for position in positions:
-        choice = (position.id, position.description)
+        choice = ('{}'.format(position.id), '{}'.format(position.description))
         position_list.append(choice)
     
-    position = SelectField('Agrupar por:', choices=position_list)
+    position = SelectField('Agrupar por:', choices=position_list, validators=[InputRequired()])
     submit = SubmitField('Enviar')
