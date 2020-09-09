@@ -32,7 +32,7 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 
-    # csrf = CsrfProtect(app)
+    csrf = CsrfProtect(app)
 
     # bring blueprints
     from .auth import auth

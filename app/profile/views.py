@@ -3,8 +3,8 @@ from flask_login import login_required, current_user
 
 
 from . import profile
-from app.forms import logout_form, select_position_form
-from app.mysql_service import get_Games, put_Game, get_Person, get_Athletes, get_People, get_stats, get_stats_by_position,get_goal_keeper_stats
+from app.forms import logout_form, select_position_form, get_versus_form
+from app.mysql_service import get_Games, put_Game, get_Person, get_Athletes, get_People, get_stats, get_stats_by_position
 
 
 @profile.route('/home/<string:current>')
@@ -65,3 +65,27 @@ def stats():
         'athletes': athletes
     }
     return render_template('stats.html', **context)
+
+@profile.route('/vs', methods=['GET', 'POST'])
+@login_required
+def versus():
+    global player1, player2
+    player1 = None
+    player2 = None
+
+    versus = get_versus_form()
+
+    if versus.validate_on_submit():
+        player_selected1 = versus.select1.data
+        player_selected2 = versus.select2.data
+        player1 = get_Person(player_selected1)
+        player2 = get_Person(player_selected2)
+
+    context = {
+        'logout': logout_form(),
+        'user': current_user,
+        'form': versus,
+        'player1': player1,
+        'player2': player2,
+    }
+    return render_template('versus.html', **context)

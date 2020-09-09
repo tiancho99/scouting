@@ -159,3 +159,14 @@ class select_position_form(FlaskForm):
     
     position = SelectField('Agrupar por:', choices=position_list, validators=[InputRequired()])
     submit = SubmitField('Enviar')
+
+
+class get_versus_form(FlaskForm):
+    people = get_People()
+    person_list =[]
+    for person in people:
+        if person.athlete != None:
+            person_list.append((person.id,'{} {}'.format(person.lastname, person.name)))
+    select1 = SelectField('Select player', choices=person_list)
+    select2 = SelectField('Select player', choices=person_list)
+    search = SubmitField()
