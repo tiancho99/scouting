@@ -82,11 +82,11 @@ def get_stats():
         func.sum(record.c.long_passes),
         func.sum(record.c.scored_goals),
         func.sum(record.c.scored_penalties),
-        func.sum(record.c.scored_freekicks),
-        ).filter(Person.id_athlete==record.c.id_athlete)\
-            .group_by(record.c.id_athlete)\
-                .order_by(Person.name)\
-                    .all()
+        func.sum(record.c.scored_freekicks),)\
+            .join(Person.athlete).join(record)\
+                .order_by(desc(func.sum(record.c.saves)+func.sum(record.c.clearances)+func.sum(record.c.centered_passes)+func.sum(record.c.assists)+func.sum(record.c.interceptions)+func.sum(record.c.short_passes)+func.sum(record.c.long_passes)+func.sum(record.c.scored_goals)+func.sum(record.c.scored_penalties)+func.sum(record.c.scored_freekicks)))\
+                    .group_by(record.c.id_athlete)\
+                        .all()
     return records
 
 def get_stats_by_position(position):
@@ -98,23 +98,23 @@ def get_stats_by_position(position):
         print('portero')
         return get_goal_keeper_stats()
     if position=='2':
-        return get_fullback_stats()
+        return get_fullback_stats(position)
     if position=='3':
-        return get_fullback_stats()
+        return get_fullback_stats(position)
     if position=='4':
-        return get_fullback_stats()
+        return get_fullback_stats(position)
     if position=='5':
-        return get_midfielder_stats()
+        return get_midfielder_stats(position)
     if position=='6':
-        return get_midfielder_stats()
+        return get_midfielder_stats(position)
     if position=='7':
-        return get_midfielder_stats()
+        return get_midfielder_stats(position)
     if position=='8':
-        return get_striker_stats()
+        return get_striker_stats(position)
     if position=='9':
-        return get_midfielder_stats()
+        return get_midfielder_stats(position)
     if position=='10':
-        return get_midfielder_stats()
+        return get_midfielder_stats(position)
 
 
 def get_goal_keeper_stats():
@@ -130,10 +130,11 @@ def get_goal_keeper_stats():
         func.sum(record.c.scored_goals),
         func.sum(record.c.scored_penalties),
         func.sum(record.c.scored_freekicks),)\
-            .filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == '1')\
-                .group_by(record.c.id_athlete)\
-                    .order_by(desc(record.c.saves + record.c.clearances + record.c.centered_passes))\
-                        .all()
+            .join(Person.athlete).join(record)\
+                .filter(Athlete.position == '1')\
+                    .group_by(record.c.id_athlete)\
+                        .order_by(desc(func.sum(record.c.saves) + func.sum(record.c.clearances) + func.sum(record.c.centered_passes)))\
+                            .all()
     return records
 
 def get_fullback_stats(position):
@@ -149,10 +150,12 @@ def get_fullback_stats(position):
         func.sum(record.c.scored_goals),
         func.sum(record.c.scored_penalties),
         func.sum(record.c.scored_freekicks),)\
-            .filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == position)\
-                .group_by(record.c.id_athlete)\
-                    .order_by(desc(record.c.clearances + record.c.centered_passes + record.c.interceptions + record.c.short_passes + record.c.long_passes))\
-                        .all()
+            .join(Person.athlete).join(record)\
+                .filter(Athlete.position == position)\
+                    .group_by(record.c.id_athlete)\
+                        .order_by(desc(func.sum(record.c.clearances)+func.sum(record.c.centered_passes)+func.sum(record.c.interceptions)+func.sum(record.c.short_passes)+func.sum(record.c.long_passes)))\
+                            .all()
+    return records
 
 def get_midfielder_stats(position):
     records = db.session.query(Person,
@@ -167,10 +170,12 @@ def get_midfielder_stats(position):
         func.sum(record.c.scored_goals),
         func.sum(record.c.scored_penalties),
         func.sum(record.c.scored_freekicks),)\
-            .filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == position)\
-                .group_by(record.c.id_athlete)\
-                    .order_by(desc(record.c.centered_passes+record.c.assists+record.c.interceptions+record.c.short_passes+record.c.long_passes+record.c.scored_goals+record.c.scored_penalties+record.c.scored_freekicks))\
-                        .all()
+            .join(Person.athlete).join(record)\
+                .filter(Athlete.position == position)\
+                    .group_by(record.c.id_athlete)\
+                        .order_by(desc(func.sum(record.c.centered_passes)+func.sum(record.c.assists)+func.sum(record.c.interceptions)+func.sum(record.c.short_passes)+func.sum(record.c.long_passes)+func.sum(record.c.scored_goals)+func.sum(record.c.scored_penalties)+func.sum(record.c.scored_freekicks)))\
+                            .all()
+    return records
 
 def get_striker_stats(position):
     records = db.session.query(Person,
@@ -185,7 +190,9 @@ def get_striker_stats(position):
         func.sum(record.c.scored_goals),
         func.sum(record.c.scored_penalties),
         func.sum(record.c.scored_freekicks),)\
-            .filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == position)\
-                .group_by(record.c.id_athlete)\
-                    .order_by(desc(record.c.assists+record.c.interceptions+record.c.short_passes+record.c.long_passes+record.c.scored_goals+record.c.scored_penalties+record.c.scored_freekicks))\
-                        .all()
+            .join(Person.athlete).join(record)\
+                .filter(Athlete.position == position)\
+                    .group_by(record.c.id_athlete)\
+                        .order_by(desc(func.sum(record.c.assists)+func.sum(record.c.interceptions)+func.sum(record.c.short_passes)+func.sum(record.c.long_passes)+func.sum(record.c.scored_goals)+func.sum(record.c.scored_penalties)+func.sum(recor+d.c.scored_freekicks)))\
+                            .all()
+    return records
