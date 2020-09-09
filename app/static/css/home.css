@@ -9960,12 +9960,6 @@ body .content .calendar {
 }
 @media (min-width: 992px) {
   body .content .calendar {
-    width: auto;
-    height: 80%;
-  }
-}
-@media (min-width: 1200px) {
-  body .content .calendar {
     width: 50%;
     height: 80%;
   }

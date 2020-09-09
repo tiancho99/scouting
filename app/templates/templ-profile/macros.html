@@ -12,39 +12,24 @@
 {% macro tableAthletes(athletes) -%}
                 {% for athlete in athletes %}
                                 <tr>
-                                        <th>{{athlete[0].name}}</th>
-                                        <th>{{athlete[0].lastname}}</th>
-                                        <th>{{athlete[0].id}}</th>
-                                        <th>{{athlete[0].athlete.dorsal}}</th>
+                                        <td>{{athlete[0].name}}</td>
+                                        <td>{{athlete[0].lastname}}</td>
+                                        <td>{{athlete[0].id}}</td>
+                                        <td>{{athlete[0].athlete.dorsal}}</td>
                                         {% if athlete[0].athlete.pos %}
-                                        <th>{{athlete[0].athlete.pos.description}}</th>
-                                        <th>{{ athlete[1] }}</th>
-                                        <th>{{ athlete[2] }}</th>
-                                        <th>{{ athlete[3] }}</th>
-                                        <th>{{ athlete[4] }}</th>
-                                        <th>{{ athlete[5] }}</th>
-                                        <th>{{ athlete[6] }}</th>
-                                        <th>{{ athlete[7] }}</th>
-                                        <th>{{ athlete[8] }}</th>
-                                        <th>{{ athlete[9] }}</th>
-                                        <th>{{ athlete[10] }}</th>
-                                        <th>{{ athlete[11] }}</th>
+                                                <td>{{athlete[0].athlete.pos.description}}</td>
+                                                <td>{{ athlete[1] }}</td>
+                                                <td>{{ athlete[2] }}</td>
+                                                <td>{{ athlete[3] }}</td>
+                                                <td>{{ athlete[4] }}</td>
+                                                <td>{{ athlete[5] }}</td>
+                                                <td>{{ athlete[6] }}</td>
+                                                <td>{{ athlete[7] }}</td>
+                                                <td>{{ athlete[8] }}</td>
+                                                <td>{{ athlete[9] }}</td>
+                                                <td>{{ athlete[10] }}</td>
+                                                <td>{{ athlete[11] }}</td>
                                         {% endif %}
-                                        
-                                        {# 
-                                                comment 
-                                                <!-- <th>{{athlete.record.id.}}</th>
-                                                <th>{{athlete.record.id}}</th>
-                                                <th>{{athlete.record.id}}</th>
-                                                <th>{{athlete.record.id}}</th>
-                                                <th>{{athlete.record.id}}</th>
-                                                <th>{{athlete.record.id}}</th>
-                                                <th>{{athlete.record.id}}</th>
-                                                <th>{{athlete.record.id}}</th>
-                                                <th>{{athlete.record.id}}</th>
-                                                <th>{{athlete.record.id}}</th>
-                                                <th>{{athlete.record.id}}</th> -->
-                                        #}
                                 </tr>
                 {% endfor %}
                 

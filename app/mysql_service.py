@@ -1,6 +1,6 @@
 from flask import jsonify
 from .models import Person, Athlete, Game, GameSchema, Position, record, db
-from sqlalchemy import desc, func
+from sqlalchemy import desc, func, asc
 
 def get_Person(email):
     person = Person.query.filter_by(id=email).first()
@@ -72,37 +72,120 @@ def get_positions():
 
 def get_stats():
     records = db.session.query(Person,
-                                func.sum(record.c.played_time),
-                                func.sum(record.c.saves),
-                                func.sum(record.c.clearances),
-                                func.sum(record.c.centered_passes),
-                                func.sum(record.c.assists),
-                                func.sum(record.c.interceptions),
-                                func.sum(record.c.short_passes),
-                                func.sum(record.c.long_passes),
-                                func.sum(record.c.scored_goals),
-                                func.sum(record.c.scored_penalties),
-                                func.sum(record.c.scored_freekicks),
-                                ).filter(Person.id_athlete==record.c.id_athlete).group_by(record.c.id_athlete).order_by(Person.name).all()
+        func.sum(record.c.played_time),
+        func.sum(record.c.saves),
+        func.sum(record.c.clearances),
+        func.sum(record.c.centered_passes),
+        func.sum(record.c.assists),
+        func.sum(record.c.interceptions),
+        func.sum(record.c.short_passes),
+        func.sum(record.c.long_passes),
+        func.sum(record.c.scored_goals),
+        func.sum(record.c.scored_penalties),
+        func.sum(record.c.scored_freekicks),
+        ).filter(Person.id_athlete==record.c.id_athlete)\
+            .group_by(record.c.id_athlete)\
+                .order_by(Person.name)\
+                    .all()
     return records
 
 def get_stats_by_position(position):
-    if position==0:
+    print('entraste al metodo')
+    print('la posicion es'+position)
+    if position=='0':
         return get_stats()
+    if position=='1':
+        print('portero')
+        return get_goal_keeper_stats()
+    if position=='2':
+        return get_fullback_stats()
+    if position=='3':
+        return get_fullback_stats()
+    if position=='4':
+        return get_fullback_stats()
+    if position=='5':
+        return get_midfielder_stats()
+    if position=='6':
+        return get_midfielder_stats()
+    if position=='7':
+        return get_midfielder_stats()
+    if position=='8':
+        return get_striker_stats()
+    if position=='9':
+        return get_midfielder_stats()
+    if position=='10':
+        return get_midfielder_stats()
+
+
+def get_goal_keeper_stats():
     records = db.session.query(Person,
-                                func.sum(record.c.played_time),
-                                func.sum(record.c.saves),
-                                func.sum(record.c.clearances),
-                                func.sum(record.c.centered_passes),
-                                func.sum(record.c.assists),
-                                func.sum(record.c.interceptions),
-                                func.sum(record.c.short_passes),
-                                func.sum(record.c.long_passes),
-                                func.sum(record.c.scored_goals),
-                                func.sum(record.c.scored_penalties),
-                                func.sum(record.c.scored_freekicks),
-                                ).filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == position).group_by(record.c.id_athlete).all()
+        func.sum(record.c.played_time),
+        func.sum(record.c.saves),
+        func.sum(record.c.clearances),
+        func.sum(record.c.centered_passes),
+        func.sum(record.c.assists),
+        func.sum(record.c.interceptions),
+        func.sum(record.c.short_passes),
+        func.sum(record.c.long_passes),
+        func.sum(record.c.scored_goals),
+        func.sum(record.c.scored_penalties),
+        func.sum(record.c.scored_freekicks),)\
+            .filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == '1')\
+                .group_by(record.c.id_athlete)\
+                    .order_by(desc(record.c.saves + record.c.clearances + record.c.centered_passes))\
+                        .all()
     return records
 
-def get_athlete_stats():
-    pass
+def get_fullback_stats(position):
+    records = db.session.query(Person,
+        func.sum(record.c.played_time),
+        func.sum(record.c.saves),
+        func.sum(record.c.clearances),
+        func.sum(record.c.centered_passes),
+        func.sum(record.c.assists),
+        func.sum(record.c.interceptions),
+        func.sum(record.c.short_passes),
+        func.sum(record.c.long_passes),
+        func.sum(record.c.scored_goals),
+        func.sum(record.c.scored_penalties),
+        func.sum(record.c.scored_freekicks),)\
+            .filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == position)\
+                .group_by(record.c.id_athlete)\
+                    .order_by(desc(record.c.clearances + record.c.centered_passes + record.c.interceptions + record.c.short_passes + record.c.long_passes))\
+                        .all()
+
+def get_midfielder_stats(position):
+    records = db.session.query(Person,
+        func.sum(record.c.played_time),
+        func.sum(record.c.saves),
+        func.sum(record.c.clearances),
+        func.sum(record.c.centered_passes),
+        func.sum(record.c.assists),
+        func.sum(record.c.interceptions),
+        func.sum(record.c.short_passes),
+        func.sum(record.c.long_passes),
+        func.sum(record.c.scored_goals),
+        func.sum(record.c.scored_penalties),
+        func.sum(record.c.scored_freekicks),)\
+            .filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == position)\
+                .group_by(record.c.id_athlete)\
+                    .order_by(desc(record.c.centered_passes+record.c.assists+record.c.interceptions+record.c.short_passes+record.c.long_passes+record.c.scored_goals+record.c.scored_penalties+record.c.scored_freekicks))\
+                        .all()
+
+def get_striker_stats(position):
+    records = db.session.query(Person,
+        func.sum(record.c.played_time),
+        func.sum(record.c.saves),
+        func.sum(record.c.clearances),
+        func.sum(record.c.centered_passes),
+        func.sum(record.c.assists),
+        func.sum(record.c.interceptions),
+        func.sum(record.c.short_passes),
+        func.sum(record.c.long_passes),
+        func.sum(record.c.scored_goals),
+        func.sum(record.c.scored_penalties),
+        func.sum(record.c.scored_freekicks),)\
+            .filter(Person.id_athlete==record.c.id_athlete, Person.id_athlete == Athlete.id, Athlete.position == position)\
+                .group_by(record.c.id_athlete)\
+                    .order_by(desc(record.c.assists+record.c.interceptions+record.c.short_passes+record.c.long_passes+record.c.scored_goals+record.c.scored_penalties+record.c.scored_freekicks))\
+                        .all()

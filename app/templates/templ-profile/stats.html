@@ -38,29 +38,30 @@
         {# 
             <p>los jugadores son</p>{{ athletes }}
         #}
-        <table border="1|0" style="display: block; overflow-x: scroll;">
+        <table class="table table-striped" style="display: block; overflow-x: scroll;">
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>dorsal</th>
-                    <th>Posicion</th>
-                    <th>played_time</th>
-                    <th>saves</th>
-                    <th>clearances</th>
-                    <th>centered_passes</th>
-                    <th>assists</th>
-                    <th>interceptions</th>
-                    <th>short_passes</th>
-                    <th>long_passes</th>
-                    <th>scored_goals</th>
-                    <th>scored_penalties</th>
-                    <th>scored_freekicks</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">dorsal</th>
+                    <th scope="col">Posicion</th>
+                    <th scope="col">played_time</th>
+                    <th scope="col">saves</th>
+                    <th scope="col">clearances</th>
+                    <th scope="col">centered_passes</th>
+                    <th scope="col">assists</th>
+                    <th scope="col">interceptions</th>
+                    <th scope="col">short_passes</th>
+                    <th scope="col">long_passes</th>
+                    <th scope="col">scored_goals</th>
+                    <th scope="col">scored_penalties</th>
+                    <th scope="col">scored_freekicks</th>
                 </tr>
             </thead>
             {{ tableAthletes(athletes) }}
         </table>
+        <p>{{athletes[0]}}</p>
     </div>
 {% endblock %}
 {% block scripts %}

@@ -152,7 +152,7 @@ class assess_form(FlaskForm):
 
 class select_position_form(FlaskForm):
     positions = get_positions()
-    position_list = [(0, 'Ver todos')]
+    position_list = [('0', 'Ver todos')]
     for position in positions:
         choice = ('{}'.format(position.id), '{}'.format(position.description))
         position_list.append(choice)
