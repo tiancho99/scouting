@@ -166,7 +166,7 @@ class get_versus_form(FlaskForm):
     person_list =[]
     for person in people:
         if person.athlete != None:
-            person_list.append((person.id,'{} {}'.format(person.lastname, person.name)))
-    select1 = SelectField('Select player', choices=person_list)
-    select2 = SelectField('Select player', choices=person_list)
+            person_list.append((str(person.athlete.id),'{} {}'.format(person.lastname, person.name)))
+    select1 = SelectField('Selecciona el jugador 1', choices=person_list)
+    select2 = SelectField('Selecciona el jugador 2', choices=person_list)
     search = SubmitField()

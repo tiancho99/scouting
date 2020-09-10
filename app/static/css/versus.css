@@ -9929,29 +9929,35 @@ body {
 }
 body .alert {
   text-align: center;
-  width: 100%;
 }
 body h1 {
+  text-align: center;
+  width: 100%;
   margin-top: 30px;
 }
 body .content {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  padding: 50px;
+  padding: 50px 50px 0px 50px;
+  width: 90%;
+}
+body .content h1 {
   width: 100%;
 }
 body .content form {
-  max-width: 700px;
+  display: block;
+  width: 100%;
   margin-bottom: 50px;
 }
 @media (min-width: 992px) {
   body .content form {
-    width: 60%;
+    width: 70%;
   }
 }
 @media (min-width: 768px) {
   body .content form {
-    width: 50%;
+    width: 60%;
   }
 }
 body .content form .file {
@@ -9965,13 +9971,40 @@ body .content form input[type=submit] {
 body .content form p {
   color: #dc3545;
 }
-body .content form .graphic {
+body .content .graphic {
+  position: relative;
   display: block;
-  width: 90%;
-  height: auto;
+  width: 90vh;
+  height: 50vh;
   border-style: solid;
   border-color: transparent transparent black black;
   border-width: px;
+  margin-bottom: 50px;
+}
+body .content .graphic .player1 {
+  background-color: #28a745;
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+}
+body .content .graphic .player2 {
+  background-color: #17a2b8;
+  position: absolute;
+  bottom: 0;
+  right: 10%;
+}
+body .content .graphic .bar {
+  box-sizing: border-box;
+  border: solid 1px #dfdfdf;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  width: 30%;
+}
+body .content .graphic p {
+  position: absolute;
+  bottom: 0;
 }
 body #footer {
   display: flex;

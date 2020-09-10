@@ -34,3 +34,25 @@
                 {% endfor %}
                 
 {%- endmacro %}
+
+{% macro graphics(dato1, dato2) -%}
+
+        {% if dato1 > dato2 %}
+                <div class="graphic">
+                        <div class="player1 bar" style="height: 50%;"><h6>{{dato1}}</h6></div>
+                        <div class="player2 bar" style="height: {{((50/dato1)* dato2)}}%;"><h6>{{dato2}}</h6></div>
+                </div>
+        {% elif dato2 > dato1 %}
+                <div class="graphic">
+                        <div class="player1 bar" style="height: {{((50/dato2)* dato1)}}%;"><h6>{{dato1}}</h6></div>
+                        <div class="player2 bar" style="height: 50%;"><h6>{{dato2}}</h6></div>
+                </div>
+        {% else %}
+                <div class="graphic">
+                        <div class="player1 bar" style="height: 50%;"><h6>{{dato1}}</h6></div>
+                        <div class="player2 bar" style="height: 50%;"><h6>{{dato2}}</h6></div>
+                </div>
+        {% endif %}
+
+
+{%- endmacro %}

@@ -1,10 +1,10 @@
-from flask import render_template, redirect, url_for, jsonify, request, Markup
+from flask import render_template, redirect, url_for, jsonify, request, Markup, flash
 from flask_login import login_required, current_user
 
 
 from . import profile
 from app.forms import logout_form, select_position_form, get_versus_form
-from app.mysql_service import get_Games, put_Game, get_Person, get_Athletes, get_People, get_stats, get_stats_by_position
+from app.mysql_service import get_Games, put_Game, get_Person, get_Athletes, get_People, get_stats, get_stats_by_position, get_person_stats
 
 
 @profile.route('/home/<string:current>')
@@ -69,23 +69,26 @@ def stats():
 @profile.route('/vs', methods=['GET', 'POST'])
 @login_required
 def versus():
-    global player1, player2
-    player1 = None
-    player2 = None
+    global players
+    players = None
 
     versus = get_versus_form()
 
     if versus.validate_on_submit():
         player_selected1 = versus.select1.data
         player_selected2 = versus.select2.data
-        player1 = get_Person(player_selected1)
-        player2 = get_Person(player_selected2)
+        if(player_selected1 == player_selected2):
+            flash('No puedes comparar el mismo jugador', category="danger")
+        else:
+            players = get_person_stats(player_selected1, player_selected2)
+
+        # player3 = get_person_stats('7', '11')
+        # return Markup(players[0][0])
 
     context = {
         'logout': logout_form(),
         'user': current_user,
         'form': versus,
-        'player1': player1,
-        'player2': player2,
+        'players': players,
     }
     return render_template('versus.html', **context)

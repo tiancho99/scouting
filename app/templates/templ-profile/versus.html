@@ -1,6 +1,6 @@
 {% import "navbar.html" as navbar %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% from "macros.html" import tableAthletes %}
+{% from "macros.html" import graphics %}
 
 
 {% extends 'base.html' %}
@@ -38,12 +38,33 @@
 
             </div>
         </form>
-        <div class="graphic">
-            {% if player1 and player2 %}
-                  {{player1}}  
-                  {{player2}}  
-            {% endif %}
-        </div>
+        {% if players %}
+                <div class="graphics">
+                    <h2>Tiempo jugado</h2>
+                    {{ graphics(players[0][0], players[1][0]) }}
+                    <h2>Atajadas</h2>
+                    {{ graphics(players[0][1], players[1][1]) }}
+                    <h2>Despejes</h2>
+                    {{ graphics(players[0][2], players[1][2]) }}
+                    <h2>Pases centrados</h2>
+                    {{ graphics(players[0][3], players[1][3]) }}
+                    <h2>Asistencias</h2>
+                    {{ graphics(players[0][4], players[1][4]) }}
+                    <h2>Intercepciones</h2>
+                    {{ graphics(players[0][5], players[1][5]) }}
+                    <h2>Pases cortos</h2>
+                    {{ graphics(players[0][6], players[1][6]) }}
+                    <h2>Pases largos</h2>
+                    {{ graphics(players[0][7], players[1][7]) }}
+                    <h2>Goles de campo</h2>
+                    {{ graphics(players[0][8], players[1][8]) }}
+                    <h2>Goles de penal</h2>
+                    {{ graphics(players[0][9], players[1][9]) }}
+                    <h2>Goles de tiro libre</h2>
+                    {{ graphics(players[0][10], players[1][10]) }}
+                </div>
+        {% endif %}
+        
         
         
     </div>

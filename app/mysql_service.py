@@ -196,3 +196,21 @@ def get_striker_stats(position):
                         .order_by(desc(func.sum(record.c.assists)+func.sum(record.c.interceptions)+func.sum(record.c.short_passes)+func.sum(record.c.long_passes)+func.sum(record.c.scored_goals)+func.sum(record.c.scored_penalties)+func.sum(recor+d.c.scored_freekicks)))\
                             .all()
     return records
+
+def get_person_stats(id1, id2):
+    records = db.session.query(
+        func.sum(record.c.played_time),
+        func.sum(record.c.saves),
+        func.sum(record.c.clearances),
+        func.sum(record.c.centered_passes),
+        func.sum(record.c.assists),
+        func.sum(record.c.interceptions),
+        func.sum(record.c.short_passes),
+        func.sum(record.c.long_passes),
+        func.sum(record.c.scored_goals),
+        func.sum(record.c.scored_penalties),
+        func.sum(record.c.scored_freekicks),)\
+            .group_by(record.c.id_athlete)\
+                .having((record.c.id_athlete == id1) | (record.c.id_athlete == id2))\
+                    .all()
+    return records    
