@@ -9995,10 +9995,9 @@ body .content .graphic .player2 {
 }
 body .content .graphic .bar {
   box-sizing: border-box;
-  border: solid 1px #dfdfdf;
-  display: flex;
-  justify-content: center;
-  align-content: center;
+  border-top: #dfdfdf solid 1px;
+  border-right: #dfdfdf solid 1px;
+  border-left: #dfdfdf solid 1px;
   text-align: center;
   width: 30%;
 }
