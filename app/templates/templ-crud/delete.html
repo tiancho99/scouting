@@ -19,7 +19,11 @@
 {% endblock %}
 
 {% block content %}
-    {{ wtf.quick_form(delete)}}
+<div class="content">
+    <div class="select-form" style="height: 100vh;">
+        {{ wtf.quick_form(delete)}}
+    </div>
+</div>
 {% endblock %}
 
 <!-- login_form.email(class_="form-control", placeholder="Email") -->

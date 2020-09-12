@@ -3,3 +3,5 @@
 *.css.map
 *.pyc
 *cache*
+venvw
+venv

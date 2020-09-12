@@ -1,5 +1,6 @@
+from .models import Person, Athlete, Game, GameSchema, Position, record, conn, db
 from flask import jsonify
-from .models import Person, Athlete, Game, GameSchema, Position, record, db
+
 from sqlalchemy import desc, func, asc
 
 def get_Person(email):
@@ -29,6 +30,10 @@ def get_games():
     games = Game.query.order_by(desc(Game.id)).all()
     return games
 
+def get_game(date):
+    game = Game.query.filter_by(id=date).first()
+    return game
+
 def put_Game(datetime, location, training):
     game = Game(datetime, location, training)
     db.session.add(game)
@@ -51,7 +56,6 @@ def __put_person(athlete, id, password, name, lastname, birthday, biography, ima
 
 def update_Athlete(id, email, name, lastname, birthday, height, weight, dorsal, position):
     person = Person.query.filter_by(id=id).first()
-    print(email)
     person.id = email
     person.name = name
     person.lastname = lastname
@@ -90,12 +94,9 @@ def get_stats():
     return records
 
 def get_stats_by_position(position):
-    print('entraste al metodo')
-    print('la posicion es'+position)
     if position=='0':
         return get_stats()
     if position=='1':
-        print('portero')
         return get_goal_keeper_stats()
     if position=='2':
         return get_fullback_stats(position)
@@ -213,4 +214,19 @@ def get_person_stats(id1, id2):
             .group_by(record.c.id_athlete)\
                 .having((record.c.id_athlete == id1) | (record.c.id_athlete == id2))\
                     .all()
-    return records    
+    return records
+
+
+def get_assess(fecha, jugador):
+    person =  db.session.query(Person).filter(Person.id==jugador).first()
+    assess = db.session.query(record.c.id_game).filter(record.c.id_game==fecha).filter(record.c.id_athlete==person.id_athlete).first()
+    return assess
+
+def add_record(match, player, played_time, saves, clearances, centered_passes, assists, interceptions,\
+                short_passes, long_passes, scored_goals, scored_penalties, scored_freekicks):
+                    athlete = get_Person(player)
+                    print(athlete.id_athlete)
+                    ins = record.insert().values(id_game=match, id_athlete=int(athlete.id_athlete), played_time=int(played_time), saves=int(saves), clearances=int(clearances), centered_passes=int(centered_passes), assists=int(assists), interceptions=int(interceptions),\
+                        short_passes=int(short_passes), long_passes=int(long_passes), scored_goals=int(scored_goals), scored_penalties=int(scored_penalties), scored_freekicks=int(scored_freekicks))
+                    
+                    conn.execute(ins)

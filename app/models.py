@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
 from flask_marshmallow import Marshmallow
 from time import strftime
 from flask_login import UserMixin
@@ -6,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 ma = Marshmallow()
+conn = create_engine('mysql://sebastian:supertiancho99@localhost/scouting', convert_unicode=True)
 
 #! person
 class Person(UserMixin, db.Model):

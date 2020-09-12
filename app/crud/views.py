@@ -4,7 +4,7 @@ from datetime import datetime
 
 from . import crud
 from app.forms import logout_form, create_edit_form, search_person_form, edit_form, delete_person_form, assess_form
-from app.mysql_service import get_Person, put_Athlete, get_People, update_Athlete, delete_Person
+from app.mysql_service import get_Person, put_Athlete, get_People, update_Athlete, delete_Person, get_assess, add_record
 
 @crud.route('/view', methods=['GET', 'POST'])
 @login_required
@@ -95,24 +95,28 @@ def assess():
         date = datetime.strptime(date_str,'%Y-%m-%d %H:%M:%S')
         assess.matches.default = date
         assess.process()
-    print(assess.validate_on_submit())
 
     if assess.validate_on_submit():
-        return Markup('hola')
         player = assess.player.player.data
-        match = match.matches.data
-        played_time = assess.played_time.data
-        saves = assess.saves.data
-        clearances = assess.clearances.data
-        centered_passes = assess.centered_passes.data
-        assists = assess.assists.data
-        interceptions = assess.interceptions.data
-        short_passes = assess.short_passes.data
-        long_passes = assess.long_passes.data
-        scored_goals = assess.scored_goals.data
-        scored_penalties = assess.scored_penalties.data
-        scored_freekicks = assess.saves.data
-        return Markup(assess.matches.data)
+        match = assess.matches.data
+        is_assess = get_assess(match, player)
+        if(is_assess != None):
+            flash('El jugador ya fue calificado en esta fecha', category='warning') 
+        else:
+            played_time = assess.played_time.data
+            saves = assess.saves.data
+            clearances = assess.clearances.data
+            centered_passes = assess.centered_passes.data
+            assists = assess.assists.data
+            interceptions = assess.interceptions.data
+            short_passes = assess.short_passes.data
+            long_passes = assess.long_passes.data
+            scored_goals = assess.scored_goals.data
+            scored_penalties = assess.scored_penalties.data
+            scored_freekicks = assess.saves.data
+            add_record(match, player, played_time, saves, clearances, centered_passes, assists, interceptions,\
+                short_passes, long_passes, scored_goals, scored_penalties, scored_freekicks)
+            flash('El jugador calificado exitosamente', category='success') 
 
 
     context = {
