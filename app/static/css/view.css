@@ -9961,6 +9961,13 @@ body .content .edit-form .edit-form-content {
   justify-content: center;
   width: 60%;
 }
+body .content .edit-form .edit-form-content .card {
+  background-color: #fafafa;
+}
+body .content .edit-form .edit-form-content .card img {
+  height: 300px;
+  object-fit: initial;
+}
 body .content .edit-form .edit-form-content .edit-form-inputs .btn-uptc {
   width: 100%;
   background-color: #ffc107;

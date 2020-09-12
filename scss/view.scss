@@ -59,7 +59,14 @@ body{
                 flex-wrap: wrap;
                 justify-content: center;
                 width: 60%;
-    
+                .card{
+                    background-color: $bg-color;
+                    img{
+                        height: 300px;
+                        object-fit: initial;
+                        // object-position: center;
+                    }
+                }
                 .edit-form-inputs{
                     .btn-uptc{
                         width: 100%;
