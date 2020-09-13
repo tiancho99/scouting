@@ -5,9 +5,12 @@ from datetime import datetime
 from . import crud
 from app.forms import logout_form, create_edit_form, search_person_form, edit_form, delete_person_form, assess_form
 from app.mysql_service import get_Person, put_Athlete, get_People, update_Athlete, delete_Person, get_assess, add_record
+from app.decorators import coach_required
+
 
 @crud.route('/view', methods=['GET', 'POST'])
 @login_required
+@coach_required
 def view():
     logout = logout_form()
     search = search_person_form()
@@ -36,6 +39,7 @@ def view():
 
 @crud.route('/edit', methods=['GET', 'POST'])
 @login_required
+@coach_required
 def edit():
     form = edit_form(request.form)
     id = form.id.data
@@ -62,6 +66,7 @@ def edit():
 
 @crud.route('/delete', methods=['GET', 'POST'])
 @login_required
+@coach_required
 def delete():
     logout = logout_form()
     delete = delete_person_form()
@@ -83,6 +88,7 @@ def delete():
 
 @crud.route('/assess', methods=['GET', 'POST'])
 @login_required
+@coach_required
 def assess():
     logout = logout_form()
     assess = assess_form()

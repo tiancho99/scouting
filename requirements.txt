@@ -1,4 +1,5 @@
 flask
+flask-testing
 flask-wtf
 flask-bootstrap
 pymysql

@@ -76,8 +76,13 @@ onload="loadCalendar()"
 
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
-    
+    {% if user.id_coach %}
+        <script src="{{ url_for('static', filename='js/home_coach.js') }}"></script>
+    {% elif user.id_athlete %}
+        <script src="{{ url_for('static', filename='js/home_athlete.js') }}"></script>
+    {% else %}
+            blockofcode
+    {% endif %} 
 {% endblock %}
 
 

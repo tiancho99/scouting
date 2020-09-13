@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from . import profile
 from app.forms import logout_form, select_position_form, get_versus_form
 from app.mysql_service import get_Games, put_Game, get_Person, get_Athletes, get_People, get_stats, get_stats_by_position, get_person_stats
-
+from app.decorators import coach_required
 
 @profile.route('/home/<string:current>')
 @login_required
@@ -35,6 +35,7 @@ def games():
 
 @profile.route('/add_game', methods=['POST'])
 @login_required
+@coach_required
 def add_game():
     date = '{} {}'.format(request.form.get('date'),request.form.get('time'))
     location = request.form.get('location')

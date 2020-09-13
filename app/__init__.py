@@ -2,7 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_marshmallow import Marshmallow
-from flask_wtf import CsrfProtect
+from flask_wtf import CSRFProtect
 
 from .config import Config
 from .models import Person
@@ -32,7 +32,7 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 
-    csrf = CsrfProtect(app)
+    csrf = CSRFProtect(app)
 
     # bring blueprints
     from .auth import auth
