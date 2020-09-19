@@ -194,7 +194,7 @@ def get_striker_stats(position):
             .join(Person.athlete).join(record)\
                 .filter(Athlete.position == position)\
                     .group_by(record.c.id_athlete)\
-                        .order_by(desc(func.sum(record.c.assists)+func.sum(record.c.interceptions)+func.sum(record.c.short_passes)+func.sum(record.c.long_passes)+func.sum(record.c.scored_goals)+func.sum(record.c.scored_penalties)+func.sum(recor+d.c.scored_freekicks)))\
+                        .order_by(desc(func.sum(record.c.assists)+func.sum(record.c.interceptions)+func.sum(record.c.short_passes)+func.sum(record.c.long_passes)+func.sum(record.c.scored_goals)+func.sum(record.c.scored_penalties)+func.sum(record.c.scored_freekicks)))\
                             .all()
     return records
 
