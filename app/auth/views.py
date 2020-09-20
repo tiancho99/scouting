@@ -62,7 +62,7 @@ def signup():
                 image_name = secure_filename(email+'_'+image.filename)
                 image_path = os.path.abspath('app/static/uploads/{}'.format(image_name))
                 image.save(image_path)
-                put_Athlete(email, password, name, lastname, birthday, biography, image_path, height, weight, dorsal, position)
+                put_Athlete(email, password, name, lastname, birthday, biography, image_name, height, weight, dorsal, position)
             else:
                 put_Athlete(email, password, name, lastname, birthday, biography, None, height, weight, dorsal, position)
 
@@ -70,7 +70,7 @@ def signup():
             user = get_Person(email)
             # user = Athlete(email, name, lastname, height, weight, birthday, dorsal, position, False, image_path)
             login_user(user)
-            return redirect(url_for('profile.home'))
+            return redirect(url_for('profile.home', current=current_user.name))
         else:
             flash('User already exist', category='danger')
     else:
@@ -78,7 +78,8 @@ def signup():
             flash('Something went wrong, check the fields', category='danger')
 
     context = {
-        'signup_form': signup
+        'signup_form': signup,
+        'current': current_user
     }
     return render_template('signup.html', **context)
 

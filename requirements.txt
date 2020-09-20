@@ -8,3 +8,4 @@ flask-SQLAlchemy
 flask-login
 flask-marshmallow
 marshmallow-SQLAlchemy
+pytest

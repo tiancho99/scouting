@@ -114,9 +114,10 @@ class Position(db.Model):
 class Coach(db.Model):
     __tablename__ = 'coach'
 
-    def __init__(self, especialization):
+    def __init__(self, especialization, link):
         self.id = None
         self.especialization = especialization
+        self.link = link
     
     id = db.Column('id', db.Integer, primary_key=True)
 
@@ -142,9 +143,8 @@ class Game(db.Model):
     training = db.Column('training', db.Boolean, nullable=False)
     
 
-# Game Schema
+#! Game Schema
 class GameSchema(ma.Schema):
     class Meta:
         fields = ('id', 'location', 'training')
-
 

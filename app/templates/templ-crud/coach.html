@@ -1,0 +1,94 @@
+{% import "navbar.html" as navbar %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends 'base.html' %}
+{% block title %} {{ super() }} | View {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+{% endblock %}
+
+{% block navbar %}
+    {% if user.id_coach %}
+        {{ navbar.coach(logout, user) }}
+    {% elif user.id_athlete %}
+        {{ navbar.athlete(logout, user) }}
+    {% else %}
+        {{ navbar.nobody() }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <form action="{{ url_for('crud.create_coach') }}" method="POST" enctype="multipart/form-data">
+            {{ signup.csrf_token }}
+            <div class="form-group">
+                {{ signup.id.label }}
+                {{ signup.id(class="form-control") }}
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            </div>
+            <div class="form-group">
+                {{ signup.password.label }}
+                {{ signup.password(class="form-control") }}           
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            </div>
+            <div class="form-group">
+                {{ signup.confirm.label }}
+                {{ signup.confirm(class="form-control") }}            
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            </div>
+            <div class="form-group">
+                {{ signup.name.label }}
+                {{ signup.name(class="form-control") }}           
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            </div>
+            <div class="form-group"> 
+                {{ signup.lastname.label }}
+                {{ signup.lastname(class="form-control") }}
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            </div>
+            <div class="form-group">
+                {{ signup.birthday.label }}
+                {{ signup.birthday(class="form-control", type="date") }}
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            </div>
+            <div class="form-group"> 
+                {{ signup.especialization.label }}
+                {{ signup.especialization(class="form-control") }}
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            </div>
+            <div class="form-group"> 
+                {{ signup.link.label }}
+                {{ signup.link(class="form-control") }}
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            </div>
+            <div class="form-group">
+                {{ signup.biography.label }}
+                {{ signup.biography(class_="form-control") }}
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            </div>
+            <div class="form-group">
+                <div class="custom-file mb-3">
+                    {{ signup.image(class="custom-file-input", id="validatedCustomFile") }}
+                    {{ signup.image.label(class="custom-file-label", for="validatedCustomFile") }}
+                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                  </div>
+            </div>
+            {{ signup.submit(class="btn-uptc btn btn-default") }}
+        </form>
+    </div>
+    {% include "footer.html" %}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}

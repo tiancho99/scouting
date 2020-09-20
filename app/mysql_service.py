@@ -1,4 +1,4 @@
-from .models import Person, Athlete, Game, GameSchema, Position, record, conn, db
+from .models import Person, Athlete, Coach, Game, GameSchema, Position, record, conn, db
 from flask import jsonify
 
 from sqlalchemy import desc, func, asc
@@ -18,6 +18,10 @@ def get_Athlete_by_dorsal(dorsal):
 def get_Athletes():
     athletes = Person.query.filter(Person.id_athlete!=None).all()
     return athletes
+
+def get_Athlete(id):
+    athlete = Athlete.query.filter(Athlete.id==id).first()
+    return athlete
 
 def get_Games():
     games_schema = GameSchema(many=True)
@@ -54,6 +58,16 @@ def __put_person(athlete, id, password, name, lastname, birthday, biography, ima
     db.session.add(person)
     db.session.commit()
 
+def put_coach(id, password, name, lastname, birthday, biography, image, especialization, link):
+    coach = Coach(especialization, link)
+    db.session.add(coach)
+    db.session.commit()
+    person = Person(id, name, lastname, birthday, biography, image)
+    person.set_coach(coach)
+    person.set_password(password)
+    db.session.add(person)
+    db.session.commit()
+
 def update_Athlete(id, email, name, lastname, birthday, height, weight, dorsal, position):
     person = Person.query.filter_by(id=id).first()
     person.id = email
@@ -68,11 +82,19 @@ def update_Athlete(id, email, name, lastname, birthday, height, weight, dorsal, 
 
 def delete_Person(person):
     db.session.delete(person)
+    player = get_Athlete(person.id_athlete)
+    # record = get_records(player.id)
+    # db.session.delete(record)
+    db.session.delete(player)
     db.session.commit()
 
 def get_positions():
     positions = Position.query.all()
     return positions
+
+def get_records(id):
+    records = db.session.query(record).filter(record.c.id_athlete==id)
+    return records
 
 def get_stats():
     records = db.session.query(Person,
@@ -225,7 +247,6 @@ def get_assess(fecha, jugador):
 def add_record(match, player, played_time, saves, clearances, centered_passes, assists, interceptions,\
                 short_passes, long_passes, scored_goals, scored_penalties, scored_freekicks):
                     athlete = get_Person(player)
-                    print(athlete.id_athlete)
                     ins = record.insert().values(id_game=match, id_athlete=int(athlete.id_athlete), played_time=int(played_time), saves=int(saves), clearances=int(clearances), centered_passes=int(centered_passes), assists=int(assists), interceptions=int(interceptions),\
                         short_passes=int(short_passes), long_passes=int(long_passes), scored_goals=int(scored_goals), scored_penalties=int(scored_penalties), scored_freekicks=int(scored_freekicks))
                     

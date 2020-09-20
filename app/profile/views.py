@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 
 from . import profile
-from app.forms import logout_form, select_position_form, get_versus_form
+from app.forms import logout_form, select_position_form, get_versus_form, schedule_form
 from app.mysql_service import get_Games, put_Game, get_Person, get_Athletes, get_People, get_stats, get_stats_by_position, get_person_stats
 from app.decorators import coach_required
 
@@ -11,6 +11,7 @@ from app.decorators import coach_required
 @login_required
 def home(current):
     logout = logout_form()
+    schedule = schedule_form()
     user = current_user
     game_form_url = url_for('profile.add_game')
     athletes = get_Person
@@ -23,6 +24,7 @@ def home(current):
         'logout': logout,
         'games': games,
         'game_form_url': game_form_url,
+        'schedule': schedule
     }
     return render_template('home.html', **context)
 
@@ -82,6 +84,11 @@ def versus():
             flash('No puedes comparar el mismo jugador', category="danger")
         else:
             players = get_person_stats(player_selected1, player_selected2)
+            if len(players) < 2:
+                players = None
+                flash('Alguno de los jugadores aun no ha sido calificado', category="danger")
+            
+
 
         # player3 = get_person_stats('7', '11')
         # return Markup(players[0][0])

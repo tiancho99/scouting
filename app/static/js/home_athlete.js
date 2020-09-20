@@ -28,7 +28,7 @@ function loadCalendar(){
     
     fillCalendar()
     removeLastDay(mm)
-    
+    addEvents()
 }
 
 function fillCalendar(){
@@ -59,6 +59,13 @@ function selectCalendar(){
     }
 }
 
+function addEvents(){
+    const $leftArrow = document.getElementById('calendar__left')
+    const $rightArrow = document.getElementById('calendar__right')
+
+    $leftArrow.addEventListener('click', lastMonth)
+    $rightArrow.addEventListener('click', nextMonth)
+}
 
 function lastMonth(){
     const $actualMonth = document.getElementById('month_label')

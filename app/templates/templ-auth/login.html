@@ -14,21 +14,21 @@
                 <form action="{{ url_for('auth.login') }}" method="POST" class="login__form">
                     {{ login_form.csrf_token }}
                     <div class="input-group">
-                        {{ login_form.email(class="form-control", placeholder="Email") }}
+                        {{ login_form.email(class="form-control", placeholder="Correo") }}
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon2"><b>@uptc.edu.co</b></span>
                         </div>
                     </div>
-                    {{ login_form.password(class="form-control", placeholder="password") }}
+                    {{ login_form.password(class="form-control", placeholder="Contraseña") }}
                     {{ login_form.submit(class="btn btn-primary") }}
                 </form>
                 <hr>
                 <small>
-                    <a href="">forgot your password?</a>
+                    <a href="">¿olvidaste tu contraseña?</a>
                 </small>
             </div>
             <div class="signin">
-                <p>Don't have an account? <a href="{{ url_for('auth.signup')}}"> Sign in</a></p>
+                <p>¿No tienes una cuenta? <a href="{{ url_for('auth.signup')}}"> Registrarse</a></p>
             </div>
         </div>
     </div>

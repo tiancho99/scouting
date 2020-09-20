@@ -29,7 +29,7 @@
                 <div class="edit-form-content">
                     <!-- card  -->
                     <div id="card" class="card" style="width: 18rem;">
-                        <img src="{{ player.image }}" class="card-img-top" alt="...">
+                        <img src="{{ url_for('static', filename='uploads/{}'.format(player.image)) }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"></h5>
                             <div class="card-text">

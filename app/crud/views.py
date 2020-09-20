@@ -1,10 +1,12 @@
 from flask import render_template, url_for, request, Markup, flash, redirect
 from flask_login import current_user, login_required
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import os 
 
 from . import crud
-from app.forms import logout_form, create_edit_form, search_person_form, edit_form, delete_person_form, assess_form
-from app.mysql_service import get_Person, put_Athlete, get_People, update_Athlete, delete_Person, get_assess, add_record
+from app.forms import logout_form, create_edit_form, search_person_form, edit_form, delete_person_form, assess_form, signup_coach_form
+from app.mysql_service import get_Person, put_Athlete, get_People, update_Athlete, delete_Person, get_assess, add_record, put_coach
 from app.decorators import coach_required
 
 
@@ -78,7 +80,6 @@ def delete():
         if player is not None:
             delete_Person(player)
             flash('User delete successfuly', category='success') 
-        
     context = {
         'user': current_user,
         'logout': logout,
@@ -132,3 +133,46 @@ def assess():
     }
 
     return render_template('assess.html', **context)
+
+@crud.route('/coach', methods=['GET', 'POST'])
+@login_required
+@coach_required
+def create_coach():
+    logout = logout_form()
+    signup = signup_coach_form()
+
+    if signup.validate_on_submit():
+        email = signup.id.data
+        user = get_Person(email)
+
+        if user is None:
+            email = signup.id.data
+            password = signup.password.data
+            name = signup.name.data
+            lastname = signup.lastname.data
+            birthday = signup.birthday.data
+            especialization = signup.especialization.data
+            link = signup.link.data
+            biography = signup.biography.data
+            image = signup.image.data
+            print(password)
+            if image != '':
+                image_name = secure_filename('{}_{}'.format(email, image.filename))
+                image_path = os.path.abspath('app/static/uploads/{}'.format(image_name))
+                image.save(image_path)
+                put_coach(email, password, name, lastname, birthday, biography, image_name, especialization, link)
+            flash('User successfully registered', category='success')
+        else:
+            flash('El usuario ya existe', category='danger')
+        return redirect(url_for('crud.create_coach'))
+    else:
+       if request.method == 'POST':
+            flash('Something went wrong, check the fields', category='danger')
+
+    context = {
+        'user': current_user,
+        'logout': logout,
+        'signup': signup,
+    }
+
+    return render_template('coach.html', **context)

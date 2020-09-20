@@ -10,20 +10,20 @@ def validate_name(form, email):
     resultado = re.fullmatch('^[a-z]*[.][a-z 0-9]*', email.data)
     if resultado is None:
         email.errors[:] = []
-        raise ValidationError('!Email is not valid: name.lastname00')
+        raise ValidationError('!El correo ingresado no es valido: nombre.apellido00')
 
 def validate_dorsal(form, dorsal):
     player = get_Athlete_by_dorsal(dorsal.data)
     if player is not None:
         dorsal.errors[:] = []
-        raise ValidationError('!Dorsal is already in use')
+        raise ValidationError('!El dorsal elegido ya está en uso')
 
 def avalidate_dorsal(form, dorsal):
     player = get_Athlete_by_dorsal(dorsal.data)
 
     if player is not None and dorsal.data != str(player.dorsal):
         dorsal.errors[:] = []
-        raise ValidationError('!Dorsal is already in use')
+        raise ValidationError('!El dorsal elegido ya está en uso')
 
 def allowed_file(form, image):
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'PNG', 'JPG', 'JPEG', 'GIF'])
@@ -34,28 +34,29 @@ def allowed_file(form, image):
         raise ValidationError('!Invalid file extension')  
 
 class login_form(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(message='Data required'), validate_name])
-    password = PasswordField('Password', validators=[InputRequired(message='Data required')])
-    submit = SubmitField('Submit')
+    email = StringField('Correo', validators=[InputRequired(message='Campo requerido'), validate_name])
+    password = PasswordField('Contraseña', validators=[InputRequired(message='campo requeridp')])
+    submit = SubmitField('Enviar')
 
 
 class signup_form(FlaskForm):
     choices = [\
-        ("1","Goal Keeper"), ("2","Right Fullback"), ("3","Left Fullback"), ("4","Center Back"), ("5","Defending/holding Midfielder"),\
-            ("6","Right Midfielder/Winger"), ("7","Central/Box-to-Box Midfielder"), ("8","Striker"), ("9","Attacking Midfielder/Playmaker"),\
-                ("10","Left Midfielder/Wingers")]
-    id = StringField('Email', validators=[InputRequired(), validate_name])
-    password = PasswordField('Pasword', validators=[InputRequired(), EqualTo('confirm', message='!Passwords must match')])
-    confirm = PasswordField('Confirm pasword', validators=[InputRequired()])
-    name = StringField('Name', validators=[InputRequired()])
-    lastname = StringField('Lastname', validators=[InputRequired()])
-    height = StringField('Height', validators=[InputRequired()])
-    weight = StringField('Wheight', validators=[InputRequired()])
-    birthday = DateField('Birthday YYYY-MM-dd', validators=[InputRequired()], format='%Y-%m-%d')
+        ("1","Arquero"), ("2","Defensa derecho"), ("3","Defensa izquierdo"), ("4","Defensa central"), ("5","Defensa/Mediocampista de contencion"),\
+            ("6","Mediocampista derecho/exterior"), ("7","Central/ Mediocampista"), ("8","Delantero"), ("9","Mediocampista ataque/armador"),\
+                ("10","Mediocampista izquierdo/exterior")]
+
+    id = StringField('Correo', validators=[InputRequired(), validate_name])
+    password = PasswordField('Contraseña', validators=[InputRequired(), EqualTo('confirm', message='!Passwords must match')])
+    confirm = PasswordField('Confirmar contraseña', validators=[InputRequired()])
+    name = StringField('Nombre', validators=[InputRequired()])
+    lastname = StringField('Apellidos', validators=[InputRequired()])
+    height = StringField('Estatura', validators=[InputRequired()])
+    weight = StringField('Peso', validators=[InputRequired()])
+    birthday = DateField('Cumpleaños', validators=[InputRequired()], format='%Y-%m-%d')
     dorsal = StringField('Dorsal', validators=[InputRequired(), validate_dorsal])
-    position = SelectField('Position', choices= choices)
-    biography  = TextAreaField('Biography')
-    image = FileField('image', validators=[InputRequired()])
+    position = SelectField('Posicion', choices= choices)
+    biography  = TextAreaField('Biografia')
+    image = FileField('Foto', validators=[InputRequired()])
     submit = SubmitField()
 
 class logout_form(FlaskForm):
@@ -67,7 +68,7 @@ class search_person_form(FlaskForm):
     for person in people:
         if person.athlete != None:
             person_list.append(('{}'.format(person.id),'{} {}'.format(person.lastname, person.name)))
-    player = SelectField('Select player', choices=person_list)
+    player = SelectField('Seleccionar jugador', choices=person_list)
     search = SubmitField()
 
 class delete_person_form(FlaskForm):
@@ -76,27 +77,27 @@ class delete_person_form(FlaskForm):
     for person in people:
         if person.athlete != None:
             person_list.append(('{}'.format(person.id),'{} {}'.format(person.lastname, person.name)))
-    player = SelectField('Select player', choices=person_list)
-    search = SubmitField('Delete')
+    player = SelectField('Seleccionar jugador', choices=person_list)
+    search = SubmitField('Borrar')
 
 def create_edit_form(id):
     class edit_form(FlaskForm):
         pass
     player = get_Person(id)
     choices = [\
-        ("1","Goal Keeper"), ("2","Right Fullback"), ("3","Left Fullback"), ("4","Center Back"), ("5","Defending/holding Midfielder"),\
-            ("6","Right Midfielder/Winger"), ("7","Central/Box-to-Box Midfielder"), ("8","Striker"), ("9","Attacking Midfielder/Playmaker"),\
-                ("10","Left Midfielder/Wingers")]
+        ("1","Arquero"), ("2","Defensa derecho"), ("3","Defensa izquierdo"), ("4","Defensa central"), ("5","Defensa/Mediocampista de contencion"),\
+            ("6","Mediocampista derecho/exterior"), ("7","Central/ Mediocampista"), ("8","Delantero"), ("9","Mediocampista ataque/armador"),\
+                ("10","Mediocampista izquierdo/exterior")]
     
     id = HiddenField('id', default=player.id, validators=[InputRequired()])
-    email = StringField('Email', validators=[validate_name, InputRequired()], default=player.id)
-    name = StringField('Name',default=player.name, validators=[InputRequired()])
-    lastname = StringField('Lastname',default=player.lastname, validators=[InputRequired()])
-    birthday = DateField('Birthday YYYY-MM-dd', format='%Y-%m-%d',default=player.birthday, validators=[InputRequired()])
-    height = StringField('Height',default=player.athlete.height, validators=[InputRequired()])
-    weight = StringField('Wheight',default=player.athlete.weight, validators=[InputRequired()])
+    email = StringField('Correo', validators=[validate_name, InputRequired()], default=player.id)
+    name = StringField('Nombre',default=player.name, validators=[InputRequired()])
+    lastname = StringField('apellidos',default=player.lastname, validators=[InputRequired()])
+    birthday = DateField('Cumpleaños', format='%Y-%m-%d',default=player.birthday, validators=[InputRequired()])
+    height = StringField('Estatura',default=player.athlete.height, validators=[InputRequired()])
+    weight = StringField('Peso',default=player.athlete.weight, validators=[InputRequired()])
     dorsal = StringField('Dorsal', validators=[validate_dorsal, InputRequired()],default=player.athlete.dorsal)
-    position = SelectField('Position', choices= choices,default=player.athlete.position, validators=[InputRequired()])
+    position = SelectField('Posicion', choices= choices,default=player.athlete.position, validators=[InputRequired()])
     submit = SubmitField()
     setattr(edit_form, 'id', id) 
     setattr(edit_form, 'email', email)
@@ -113,19 +114,19 @@ def create_edit_form(id):
 
 class edit_form(FlaskForm):
     choices = [\
-    ("1","Goal Keeper"), ("2","Right Fullback"), ("3","Left Fullback"), ("4","Center Back"), ("5","Defending/holding Midfielder"),\
-        ("6","Right Midfielder/Winger"), ("7","Central/Box-to-Box Midfielder"), ("8","Striker"), ("9","Attacking Midfielder/Playmaker"),\
-            ("10","Left Midfielder/Wingers")]
+        ("1","Arquero"), ("2","Defensa derecho"), ("3","Defensa izquierdo"), ("4","Defensa central"), ("5","Defensa/Mediocampista de contencion"),\
+            ("6","Mediocampista derecho/exterior"), ("7","Central/ Mediocampista"), ("8","Delantero"), ("9","Mediocampista ataque/armador"),\
+                ("10","Mediocampista izquierdo/exterior")]
 
     id = HiddenField('id')
-    email = StringField('Email', validators=[validate_name])
-    name = StringField('Name')
-    lastname = StringField('Lastname')
-    birthday = DateField('Birthday YYYY-MM-dd', format='%Y-%m-%d')
-    height = StringField('Height')
-    weight = StringField('Wheight')
+    email = StringField('Correo', validators=[validate_name])
+    name = StringField('Nombre')
+    lastname = StringField('Apellido')
+    birthday = DateField('Cumpleaños', format='%Y-%m-%d')
+    height = StringField('Estatura')
+    weight = StringField('Peso')
     dorsal = StringField('Dorsal', validators=[avalidate_dorsal])
-    position = SelectField('Position', choices= choices)
+    position = SelectField('Posicion', choices= choices)
     submit = SubmitField()
 
 class assess_form(FlaskForm):
@@ -151,13 +152,12 @@ class assess_form(FlaskForm):
     submit = SubmitField('Enviar')
 
 class select_position_form(FlaskForm):
-    positions = get_positions()
-    position_list = [('0', 'Ver todos')]
-    for position in positions:
-        choice = ('{}'.format(position.id), '{}'.format(position.description))
-        position_list.append(choice)
+    choices = [\
+        ("1","Arquero"), ("2","Defensa derecho"), ("3","Defensa izquierdo"), ("4","Defensa central"), ("5","Defensa/Mediocampista de contencion"),\
+            ("6","Mediocampista derecho/exterior"), ("7","Central/ Mediocampista"), ("8","Delantero"), ("9","Mediocampista ataque/armador"),\
+                ("10","Mediocampista izquierdo/exterior")]
     
-    position = SelectField('Agrupar por:', choices=position_list, validators=[InputRequired()])
+    position = SelectField('Agrupar por:', choices=choices, validators=[InputRequired()])
     submit = SubmitField('Enviar')
 
 
@@ -170,3 +170,19 @@ class get_versus_form(FlaskForm):
     select1 = SelectField('Selecciona el jugador 1', choices=person_list)
     select2 = SelectField('Selecciona el jugador 2', choices=person_list)
     search = SubmitField()
+
+class schedule_form(FlaskForm):
+    pass
+
+class signup_coach_form(FlaskForm):
+    id = StringField('Correo', validators=[InputRequired(), validate_name])
+    password = PasswordField('Contraseña', validators=[InputRequired(), EqualTo('confirm', message='!Passwords must match')])
+    confirm = PasswordField('Confirmar contraseña', validators=[InputRequired()])
+    name = StringField('Nombre', validators=[InputRequired()])
+    lastname = StringField('Apellidos', validators=[InputRequired()])
+    birthday = DateField('Cumpleaños', validators=[InputRequired()], format='%Y-%m-%d')
+    especialization = StringField('especializacion', validators=[InputRequired()])
+    link = StringField('Link profesional', validators=[InputRequired()])
+    biography  = TextAreaField('Biografia')
+    image = FileField('Foto', validators=[InputRequired()])
+    submit = SubmitField()

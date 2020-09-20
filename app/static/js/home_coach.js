@@ -220,11 +220,13 @@ function closeViewDay(){
 }
 
 function fillOverlayContent(div, day){
+    // debugger
     const month = document.getElementById('month_label').dataset.number
     const year = document.getElementById('year_label').dataset.number
     const date = document.createElement('p')
     const dateTxt = document.createTextNode(`${day} de ${months[month]} del ${year}`)
     const form = document.createElement('form')
+    const csrfInput = window.csrf_token
     const locationInput = document.createElement('input')
     const timeInput = document.createElement('input')
     const trainingRadio = document.createElement('input')
@@ -239,6 +241,10 @@ function fillOverlayContent(div, day){
     date.appendChild(dateTxt)
     form.setAttribute('action', '/profile/add_game')
     form.setAttribute('method', 'POST')
+    // csrfInput.setAttribute('id', 'csrf_token')
+    // csrfInput.setAttribute('name', 'csrf_token')
+    // csrfInput.setAttribute('type', 'hidden')
+    // csrfInput.setAttribute('value', window.csrf_token)
     locationInput.setAttribute('type', 'text')
     locationInput.setAttribute('name', 'location')
     locationInput.setAttribute('placeholder', 'Lugar')
@@ -263,6 +269,7 @@ function fillOverlayContent(div, day){
     dateInput.setAttribute('name', 'date')
 
     div.appendChild(date)
+    form.append(csrfInput)
     form.appendChild(locationInput)
     form.appendChild(timeInput)
     trainigLabel.appendChild(training)
