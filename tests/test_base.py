@@ -29,6 +29,31 @@ class MainTest(TestCase):
         self.assert200(response)
 
     def test_db(self):
-        db.engine.execute('SELECT 1')
+        result = db.engine.execute('SELECT 1')
+        self.assertIsNotNone(result)
+    def test_db_person(self):
+        result = db.engine.execute('SELECT * from person')
+        self.assertIsNotNone(result)
+    def test_db_athlete(self):
+        result = db.engine.execute('SELECT * from athlete')
+        self.assertIsNotNone(result)
+    def test_db_coach(self):
+        result = db.engine.execute('SELECT * from coach')
+        self.assertIsNotNone(result)
+    def test_db_record(self):
+        result = db.engine.execute('SELECT * from record')
+        self.assertIsNotNone(result)
+    def test_db_game(self):
+        result = db.engine.execute('SELECT * from game')
+
+        self.assertIsNotNone(result)
+    def test_db_position(self):
+        result = db.engine.execute('SELECT * from position')
+
+        self.assertIsNotNone(result)
+    
+    
+        
+                  
     
         
