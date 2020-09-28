@@ -50,7 +50,7 @@ class signup_form(FlaskForm):
     confirm = PasswordField('Confirmar contraseña', validators=[InputRequired()])
     name = StringField('Nombre', validators=[InputRequired()])
     lastname = StringField('Apellidos', validators=[InputRequired()])
-    height = StringField('Estatura', validators=[InputRequired()])
+    height = StringField('Estatura (cm)', validators=[InputRequired()])
     weight = StringField('Peso', validators=[InputRequired()])
     birthday = DateField('Cumpleaños', validators=[InputRequired()], format='%Y-%m-%d')
     dorsal = StringField('Dorsal', validators=[InputRequired(), validate_dorsal])
@@ -94,7 +94,7 @@ def create_edit_form(id):
     name = StringField('Nombre',default=player.name, validators=[InputRequired()])
     lastname = StringField('apellidos',default=player.lastname, validators=[InputRequired()])
     birthday = DateField('Cumpleaños', format='%Y-%m-%d',default=player.birthday, validators=[InputRequired()])
-    height = StringField('Estatura',default=player.athlete.height, validators=[InputRequired()])
+    height = StringField('Estatura (cm)',default=player.athlete.height, validators=[InputRequired()])
     weight = StringField('Peso',default=player.athlete.weight, validators=[InputRequired()])
     dorsal = StringField('Dorsal', validators=[validate_dorsal, InputRequired()],default=player.athlete.dorsal)
     position = SelectField('Posicion', choices= choices,default=player.athlete.position, validators=[InputRequired()])
@@ -123,7 +123,7 @@ class edit_form(FlaskForm):
     name = StringField('Nombre')
     lastname = StringField('Apellido')
     birthday = DateField('Cumpleaños', format='%Y-%m-%d')
-    height = StringField('Estatura')
+    height = StringField('Estatura (cm)')
     weight = StringField('Peso')
     dorsal = StringField('Dorsal', validators=[avalidate_dorsal])
     position = SelectField('Posicion', choices= choices)
@@ -153,7 +153,7 @@ class assess_form(FlaskForm):
 
 class select_position_form(FlaskForm):
     choices = [\
-        ("1","Arquero"), ("2","Defensa derecho"), ("3","Defensa izquierdo"), ("4","Defensa central"), ("5","Defensa/Mediocampista de contencion"),\
+        ('0', 'Ver todas'),("1","Arquero"), ("2","Defensa derecho"), ("3","Defensa izquierdo"), ("4","Defensa central"), ("5","Defensa/Mediocampista de contencion"),\
             ("6","Mediocampista derecho/exterior"), ("7","Central/ Mediocampista"), ("8","Delantero"), ("9","Mediocampista ataque/armador"),\
                 ("10","Mediocampista izquierdo/exterior")]
     

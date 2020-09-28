@@ -94,9 +94,9 @@ class Athlete(db.Model):
 
     position = db.Column('position', db.ForeignKey('position.id'))
 
-    person = db.relationship('Person', backref='athlete', lazy=True, uselist=False)
+    person = db.relationship('Person', backref='athlete', lazy=False, uselist=False)
 
-    record = db.relationship('Game', secondary=record, lazy='subquery', backref=db.backref('athlete', lazy=True))
+    record = db.relationship('Game', secondary=record, lazy='subquery', backref=db.backref('athlete', lazy=False))
 
 
 
@@ -107,7 +107,7 @@ class Position(db.Model):
 
     description = db.Column('description', db.String(50), nullable=False)
 
-    athlete = db.relationship('Athlete', backref='pos', lazy=True, uselist=False)
+    athlete = db.relationship('Athlete', backref='pos', lazy=False, uselist=False)
 
 
 #!Coach
@@ -125,7 +125,7 @@ class Coach(db.Model):
 
     link = db.Column('link', db.String(500), nullable=True)
 
-    person = db.relationship('Person', backref='coach', lazy=True, uselist=False)
+    person = db.relationship('Person', backref='coach', lazy=False, uselist=False)
 
 #!Game
 class Game(db.Model):

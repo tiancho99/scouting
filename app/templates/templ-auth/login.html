@@ -14,12 +14,12 @@
                 <form action="{{ url_for('auth.login') }}" method="POST" class="login__form">
                     {{ login_form.csrf_token }}
                     <div class="input-group">
-                        {{ login_form.email(class="form-control", placeholder="Correo") }}
+                        {{ login_form.email(class="form-control", placeholder="Correo", id='email') }}
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon2"><b>@uptc.edu.co</b></span>
                         </div>
                     </div>
-                    {{ login_form.password(class="form-control", placeholder="Contraseña") }}
+                    {{ login_form.password(class="form-control", placeholder="Contraseña", id='password') }}
                     {{ login_form.submit(class="btn btn-primary") }}
                 </form>
                 <hr>

@@ -20,17 +20,18 @@ def view():
     if search.validate_on_submit():
         id = search.player.data
         player = get_Person(id)
-        edit = create_edit_form(id=id)
-        
-        context = {
-            'user': current_user,
-            'player': player,
-            'logout':logout,
-            'search': search,
-            'edit': edit,
+        if player != None:
+            edit = create_edit_form(id=id)
             
-        }
-        return render_template('view.html', **context)
+            context = {
+                'user': current_user,
+                'player': player,
+                'logout':logout,
+                'search': search,
+                'edit': edit,
+                
+            }
+            return render_template('view.html', **context)
 
     context = {
         'user': current_user,
