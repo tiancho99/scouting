@@ -76,10 +76,14 @@ def versus():
     players = None
 
     versus = get_versus_form()
-
+    array = [('{}'.format(person.id_athlete),'{} {}'.format(person.lastname, person.name)) for person in get_Athletes()]
+    versus.select1.choices = array
+    versus.select2.choices = array
     if versus.validate_on_submit():
         player_selected1 = versus.select1.data
         player_selected2 = versus.select2.data
+        print(player_selected1)
+        print(player_selected2)
         if(player_selected1 == player_selected2):
             flash('No puedes comparar el mismo jugador', category="danger")
         else:

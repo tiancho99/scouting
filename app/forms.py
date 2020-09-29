@@ -63,21 +63,12 @@ class logout_form(FlaskForm):
     logout = SubmitField()
 
 class search_person_form(FlaskForm):
-    people = get_People()
-    person_list =[]
-    for person in people:
-        if person.athlete != None:
-            person_list.append(('{}'.format(person.id),'{} {}'.format(person.lastname, person.name)))
-    player = SelectField('Seleccionar jugador', choices=person_list)
+
+    player = SelectField('Seleccionar jugador', choices=[])
     search = SubmitField()
 
 class delete_person_form(FlaskForm):
-    people = get_People()
-    person_list =[]
-    for person in people:
-        if person.athlete != None:
-            person_list.append(('{}'.format(person.id),'{} {}'.format(person.lastname, person.name)))
-    player = SelectField('Seleccionar jugador', choices=person_list)
+    player = SelectField('Seleccionar jugador', choices=[])
     search = SubmitField('Borrar')
 
 def create_edit_form(id):
@@ -130,14 +121,8 @@ class edit_form(FlaskForm):
     submit = SubmitField()
 
 class assess_form(FlaskForm):
-    games = get_games()
-    gameList = []
-    for game in games:
-        choice = ('{}'.format(game.id), '{}'.format(game.id))
-        gameList.append(choice)
-
     player = FormField(search_person_form)
-    matches = SelectField('Partido', choices=gameList)
+    matches = SelectField('Partido', choices=[])
     played_time = IntegerField('Minutos jugados',default=0)
     saves = IntegerField('Atajadas',default=0)
     clearances = IntegerField('Despejes',default=0)
@@ -167,8 +152,8 @@ class get_versus_form(FlaskForm):
     for person in people:
         if person.athlete != None:
             person_list.append((str(person.athlete.id),'{} {}'.format(person.lastname, person.name)))
-    select1 = SelectField('Selecciona el jugador 1', choices=person_list)
-    select2 = SelectField('Selecciona el jugador 2', choices=person_list)
+    select1 = SelectField('Selecciona el jugador 1', choices=[])
+    select2 = SelectField('Selecciona el jugador 2', choices=[])
     search = SubmitField()
 
 class schedule_form(FlaskForm):

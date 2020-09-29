@@ -49,7 +49,6 @@ class MainTest(TestCase):
         self.assertIsNotNone(result)
     def test_db_position(self):
         result = db.engine.execute('SELECT * from position')
-
         self.assertIsNotNone(result)
     
     

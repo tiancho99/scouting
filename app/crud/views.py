@@ -6,7 +6,7 @@ import os
 
 from . import crud
 from app.forms import logout_form, create_edit_form, search_person_form, edit_form, delete_person_form, assess_form, signup_coach_form
-from app.mysql_service import get_Person, put_Athlete, get_People, update_Athlete, delete_Person, get_assess, add_record, put_coach
+from app.mysql_service import get_Person, put_Athlete, get_People, update_Athlete, delete_Person, get_assess, add_record, put_coach, get_Athletes, get_games
 from app.decorators import coach_required
 
 
@@ -16,7 +16,7 @@ from app.decorators import coach_required
 def view():
     logout = logout_form()
     search = search_person_form()
-
+    search.player.choices = [('{}'.format(person.id),'{} {}'.format(person.lastname, person.name)) for person in get_Athletes()]
     if search.validate_on_submit():
         id = search.player.data
         player = get_Person(id)
@@ -73,6 +73,7 @@ def edit():
 def delete():
     logout = logout_form()
     delete = delete_person_form()
+    delete.player.choices = [('{}'.format(person.id),'{} {}'.format(person.lastname, person.name)) for person in get_Athletes()]
 
     if delete.validate_on_submit():
         id = delete.player.data
@@ -80,7 +81,8 @@ def delete():
 
         if player is not None:
             delete_Person(player)
-            flash('User delete successfuly', category='success') 
+            flash('User delete successfuly', category='success')
+            return redirect(url_for('crud.delete'))
     context = {
         'user': current_user,
         'logout': logout,
@@ -94,6 +96,8 @@ def delete():
 def assess():
     logout = logout_form()
     assess = assess_form()
+    assess.player.player.choices = [('{}'.format(person.id),'{} {}'.format(person.lastname, person.name)) for person in get_Athletes()]
+    assess.matches.choices = [('{}'.format(game.id), '{}'.format(game.id)) for game in get_games()]
     if request.args:
         year = request.args.get('year')
         month = request.args.get('month')
